@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="144" viewBox="0 0 680 144" role="img" aria-labelledby="title desc">
+  <title id="title">Xintu Packaging Solutions</title>
+  <desc id="desc">Professional packaging sourcing logo with a box and route mark.</desc>
+  <rect width="680" height="144" fill="none"/>
+  <g transform="translate(18 18)">
+    <path d="M54 4 101 31v54l-47 27L7 85V31L54 4Z" fill="#1769aa"/>
+    <path d="m54 4 47 27-47 27L7 31 54 4Z" fill="#2b8a6b"/>
+    <path d="M54 58v54L7 85V31l47 27Z" fill="#105783"/>
+    <path d="M54 58 101 31v54l-47 27V58Z" fill="#1d7cbb"/>
+    <path d="M29 42 76 15" stroke="#fff" stroke-width="7" stroke-linecap="round" opacity=".9"/>
+    <path d="M35 74c15-13 32-13 50 0" stroke="#fff" stroke-width="6" stroke-linecap="round" fill="none" opacity=".9"/>
+    <circle cx="35" cy="74" r="5" fill="#fff"/>
+    <circle cx="85" cy="74" r="5" fill="#fff"/>
+  </g>
+  <g fill="#17212b" transform="translate(150 35)">
+    <text x="0" y="39" font-family="Arial, Helvetica, sans-serif" font-size="39" font-weight="800">Xintu Packaging</text>
+    <text x="2" y="78" font-family="Arial, Helvetica, sans-serif" font-size="23" font-weight="600" fill="#5f6f7f">Solutions</text>
+  </g>
+</svg>
