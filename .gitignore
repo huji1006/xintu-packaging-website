@@ -1,0 +1,9 @@
+node_modules
+dist
+.npm-cache
+tsconfig.tsbuildinfo
+desktop-home.png
+mobile-*.png
+原始需求.md
+.DS_Store
+*.local
