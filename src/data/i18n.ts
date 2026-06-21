@@ -280,7 +280,7 @@ export const content: Record<
         subtitle: "Printed shopping bags, kraft bags and takeaway paper bags.",
         description:
           "A practical choice for retail, apparel, gifts, cafes and takeaway brands that need a branded carrying solution with flexible paper, handle and print options.",
-        image: "./assets/product-paper-bags.svg",
+        image: "./assets/product-paper-bags.svg?v=20260621-2",
         bestFor: ["Retail shops", "Apparel brands", "Coffee shops", "Gift packaging"],
         commonOptions: [
           "Kraft paper",
@@ -300,7 +300,7 @@ export const content: Record<
         subtitle: "Poly mailers, compostable mailers, kraft mailers and padded mailers.",
         description:
           "Lightweight mailing bags for Shopify, DTC, fashion and accessory brands that ship soft goods or small products internationally.",
-        image: "./assets/product-mailer-bags.svg",
+        image: "./assets/product-mailer-bags.svg?v=20260621-2",
         bestFor: ["DTC stores", "Fashion brands", "Accessories", "Subscription shipments"],
         commonOptions: [
           "Self-seal strip",
@@ -320,7 +320,7 @@ export const content: Record<
         subtitle: "Coffee bags, tea bags, pet food bags, stand-up food pouches and flat-bottom bags.",
         description:
           "Flexible food packaging for dry goods and specialty products, with common options for zipper, valve, window and barrier materials.",
-        image: "./assets/product-food-coffee-bags.svg",
+        image: "./assets/product-food-coffee-bags.svg?v=20260621-2",
         bestFor: ["Coffee roasters", "Tea brands", "Pet food brands", "Snack brands"],
         commonOptions: [
           "Flat-bottom bags",
@@ -341,7 +341,7 @@ export const content: Record<
         subtitle: "Flexible pouches for beauty, wellness, refill, accessory and small product packaging.",
         description:
           "A versatile pouch format for non-food and dry product applications where brands need a clean retail look and flexible order quantities.",
-        image: "./assets/product-stand-up-pouches.svg",
+        image: "./assets/product-stand-up-pouches.svg?v=20260621-2",
         bestFor: ["Beauty refills", "Candles and aroma", "Supplements", "Small accessories"],
         commonOptions: ["Matte finish", "Gloss finish", "Hang hole", "Tear notch", "Zipper", "Custom size"],
         sourcingNotes:
@@ -355,7 +355,7 @@ export const content: Record<
         subtitle: "Mailer boxes, folding cartons, gift boxes and protective inserts.",
         description:
           "Custom box packaging for eCommerce, beauty, electronics, accessories and energy product components that need a more structured presentation.",
-        image: "./assets/product-packaging-boxes.svg",
+        image: "./assets/product-packaging-boxes.svg?v=20260621-2",
         bestFor: ["Electronics accessories", "Beauty products", "Gift sets", "Energy product components"],
         commonOptions: [
           "Corrugated mailer boxes",
@@ -376,7 +376,7 @@ export const content: Record<
         subtitle: "Stickers, hang tags, cards, tissue paper and coordinated packaging sets.",
         description:
           "A flexible way for small brands to upgrade unboxing with a coordinated set of printed packaging accessories and simple add-ons.",
-        image: "./assets/product-brand-kit.svg",
+        image: "./assets/product-brand-kit.svg?v=20260621-2",
         bestFor: ["New product launches", "Influencer kits", "Apparel brands", "Gift bundles"],
         commonOptions: [
           "Thank-you cards",
@@ -564,7 +564,7 @@ export const content: Record<
         subtitle: "印刷购物袋、牛皮纸袋和外卖纸袋。",
         description:
           "适合零售、服装、礼品、咖啡店和外卖品牌，用来做有品牌感的手提包装，可根据纸张、手提绳和印刷方式灵活定制。",
-        image: "./assets/product-paper-bags.svg",
+        image: "./assets/product-paper-bags.svg?v=20260621-2",
         bestFor: ["零售店", "服装品牌", "咖啡店", "礼品包装"],
         commonOptions: ["牛皮纸", "白卡纸", "纸绳手挽", "棉绳或丝带手挽", "哑膜或亮膜"],
         sourcingNotes: "适合想提升线下品牌露出、但不想一开始做太复杂包装项目的品牌。",
@@ -577,7 +577,7 @@ export const content: Record<
         subtitle: "塑料快递袋、可降解快递袋、牛皮纸邮寄袋和气泡袋。",
         description:
           "适合 Shopify、DTC、服装和配饰品牌寄送软性产品或小件产品，重量轻，尺寸和印刷调整比较灵活。",
-        image: "./assets/product-mailer-bags.svg",
+        image: "./assets/product-mailer-bags.svg?v=20260621-2",
         bestFor: ["DTC 电商品牌", "服装品牌", "配饰产品", "订阅制发货"],
         commonOptions: ["自粘封口", "双胶条", "再生 PE", "可降解材料", "气泡内衬"],
         sourcingNotes: "这是很常见的询盘分类，因为尺寸、材料和印刷可以根据不同数量快速调整。",
@@ -590,7 +590,7 @@ export const content: Record<
         subtitle: "咖啡袋、茶叶袋、宠物食品袋、食品自立袋和八边封袋。",
         description:
           "适合干货和特色食品的软包装，可根据需要选择拉链、气阀、开窗和阻隔材料等常见配置。",
-        image: "./assets/product-food-coffee-bags.svg",
+        image: "./assets/product-food-coffee-bags.svg?v=20260621-2",
         bestFor: ["咖啡烘焙品牌", "茶叶品牌", "宠物食品品牌", "零食品牌"],
         commonOptions: ["八边封袋", "自立袋", "拉链封口", "单向排气阀", "透明开窗", "铝箔阻隔材料"],
         sourcingNotes: "适合需要先看样品再做大货的品牌，因为材料手感、封口效果和印刷颜色都很重要。",
@@ -603,7 +603,7 @@ export const content: Record<
         subtitle: "适合美妆、香薰、补充装、配件和小产品的通用软包装。",
         description:
           "一种应用范围很广的袋型，适合非食品和干燥类产品，能做出干净的零售展示效果，同时支持比较灵活的订购数量。",
-        image: "./assets/product-stand-up-pouches.svg",
+        image: "./assets/product-stand-up-pouches.svg?v=20260621-2",
         bestFor: ["美妆补充装", "香薰产品", "营养补充品", "小配件"],
         commonOptions: ["哑面效果", "亮面效果", "挂孔", "易撕口", "拉链", "定制尺寸"],
         sourcingNotes: "这个分类适合作为第一版主推，因为一个页面可以覆盖很多成长型品牌的常见使用场景。",
@@ -616,7 +616,7 @@ export const content: Record<
         subtitle: "飞机盒、折叠彩盒、礼品盒和保护内托。",
         description:
           "适合电商、美妆、电子配件、礼品套装和新能源配件等需要更有结构感和保护性的产品包装。",
-        image: "./assets/product-packaging-boxes.svg",
+        image: "./assets/product-packaging-boxes.svg?v=20260621-2",
         bestFor: ["电子配件", "美妆产品", "礼品套装", "新能源产品配件"],
         commonOptions: ["瓦楞飞机盒", "折叠彩盒", "硬盒", "纸内托", "泡棉内托", "局部 UV 或烫金"],
         sourcingNotes: "电子和新能源配件包装先放在这个分类下，特别适合需要内托和保护结构的产品。",
@@ -629,7 +629,7 @@ export const content: Record<
         subtitle: "贴纸、吊牌、卡片、包装纸、纸巾纸和整套品牌包装组合。",
         description:
           "适合中小品牌用较灵活的方式提升开箱体验，通过一组统一风格的包装配件和简单加项，让品牌感更完整。",
-        image: "./assets/product-brand-kit.svg",
+        image: "./assets/product-brand-kit.svg?v=20260621-2",
         bestFor: ["新品发布", "达人礼盒", "服装品牌", "礼品组合"],
         commonOptions: ["感谢卡", "贴纸卷", "吊牌", "纸巾纸", "包装套筒", "组合包装套装"],
         sourcingNotes: "适合还不确定具体包装结构，但希望整体开箱体验更统一、更专业的海外品牌。",
