@@ -33,7 +33,7 @@ export const company = {
   registrationNo: "91440104MAG0FMAK5U",
   locationEn: "Guangzhou, China",
   locationZh: "中国广州",
-  email: "sales@xintutrade.com",
+  email: "judy@xintutrade.com",
   whatsapp: "+86 000 0000 0000",
   formEndpoint: "",
 };

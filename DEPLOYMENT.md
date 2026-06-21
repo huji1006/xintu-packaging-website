@@ -46,7 +46,7 @@ DNS changes can take minutes to 24 hours to fully take effect.
 
 ## Still required before real launch
 
-- Replace `sales@xintutrade.com` if you want to use a different receiving email.
+- Replace `judy@xintutrade.com` if you want to use a different receiving email.
 - Replace the placeholder WhatsApp number in `src/data/i18n.ts`.
 - Configure `company.formEndpoint` after choosing a form service.
 - Push the project to GitHub and confirm the Pages workflow is green.

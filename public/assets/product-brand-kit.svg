@@ -1,13 +1,46 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="720" height="520" viewBox="0 0 720 520">
-  <rect width="720" height="520" fill="#f7fafc"/>
-  <circle cx="135" cy="118" r="90" fill="#e5f1fa"/>
-  <g transform="translate(120 92)">
-    <rect x="55" y="170" width="265" height="195" rx="16" fill="#1769aa"/>
-    <path d="M55 170 188 82l132 88H55Z" fill="#2b8a6b"/>
-    <rect x="360" y="24" width="145" height="210" rx="16" fill="#ffffff" stroke="#cbdce8" stroke-width="8"/>
-    <circle cx="432" cy="94" r="36" fill="#2b8a6b"/>
-    <rect x="388" y="156" width="88" height="16" rx="8" fill="#1769aa"/>
-    <rect x="320" y="275" width="190" height="72" rx="36" fill="#e7c083"/>
-    <rect x="92" y="245" width="190" height="25" rx="12.5" fill="#ffffff"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="680" viewBox="0 0 960 680" role="img" aria-label="Brand packaging kit and accessories product mockup">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#fffdf9"/>
+      <stop offset="1" stop-color="#eef6f3"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="150%">
+      <feDropShadow dx="0" dy="22" stdDeviation="20" flood-color="#173145" flood-opacity=".14"/>
+    </filter>
+  </defs>
+  <rect width="960" height="680" fill="url(#bg)"/>
+  <ellipse cx="484" cy="565" rx="360" ry="44" fill="#cbd8d2" opacity=".34"/>
+  <g filter="url(#shadow)">
+    <g transform="translate(118 186) rotate(-8 154 108)">
+      <rect x="0" y="0" width="308" height="216" rx="22" fill="#ffffff"/>
+      <rect x="30" y="34" width="248" height="148" rx="18" fill="#f1f6f4"/>
+      <path d="M64 102h180" stroke="#2b8a6b" stroke-width="22" stroke-linecap="round"/>
+      <path d="M98 144h112" stroke="#a3c7b8" stroke-width="12" stroke-linecap="round"/>
+    </g>
+    <g transform="translate(360 128) rotate(7 136 100)">
+      <rect x="0" y="0" width="272" height="200" rx="20" fill="#cda364"/>
+      <rect x="36" y="42" width="200" height="116" rx="16" fill="#fff2dc"/>
+      <circle cx="222" cy="46" r="18" fill="#2b8a6b"/>
+    </g>
+    <g transform="translate(622 176)">
+      <rect x="0" y="0" width="164" height="250" rx="18" fill="#263b47"/>
+      <circle cx="82" cy="44" r="18" fill="#edf4f0"/>
+      <path d="M42 124h80" stroke="#edf4f0" stroke-width="18" stroke-linecap="round"/>
+      <path d="M54 164h56" stroke="#edf4f0" stroke-width="10" stroke-linecap="round" opacity=".78"/>
+    </g>
+    <g transform="translate(190 410)">
+      <path d="M0 48 150 0l150 48-150 66L0 48Z" fill="#e1b679"/>
+      <path d="M0 48v120l150 72V114L0 48Z" fill="#bf8c4c"/>
+      <path d="M300 48v120l-150 72V114l150-66Z" fill="#a9793f"/>
+    </g>
+    <g transform="translate(518 390)">
+      <rect x="0" y="0" width="96" height="180" rx="48" fill="#ffffff"/>
+      <circle cx="48" cy="48" r="30" fill="#2b8a6b"/>
+      <circle cx="48" cy="108" r="30" fill="#d8b084"/>
+    </g>
+    <g transform="translate(640 430) rotate(-8 84 50)">
+      <rect x="0" y="0" width="168" height="100" rx="14" fill="#f5eee2"/>
+      <path d="M34 46h100" stroke="#c99b5b" stroke-width="14" stroke-linecap="round"/>
+    </g>
   </g>
 </svg>

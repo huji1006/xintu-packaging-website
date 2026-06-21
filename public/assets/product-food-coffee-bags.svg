@@ -1,11 +1,40 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="720" height="520" viewBox="0 0 720 520">
-  <rect width="720" height="520" fill="#f7fafc"/>
-  <circle cx="590" cy="390" r="96" fill="#e5f1fa"/>
-  <g transform="translate(160 58)">
-    <path d="M80 0h280l52 410H28L80 0Z" fill="#e7c083"/>
-    <path d="M80 0h280l18 145H62L80 0Z" fill="#2b8a6b"/>
-    <rect x="118" y="206" width="204" height="36" rx="18" fill="#ffffff"/>
-    <rect x="150" y="270" width="140" height="20" rx="10" fill="#ffffff"/>
-    <circle cx="334" cy="70" r="18" fill="#ffffff"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="680" viewBox="0 0 960 680" role="img" aria-label="Food and coffee packaging bags product mockup">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#fffdf8"/>
+      <stop offset="1" stop-color="#edf5ee"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="150%">
+      <feDropShadow dx="0" dy="24" stdDeviation="22" flood-color="#173145" flood-opacity=".14"/>
+    </filter>
+  </defs>
+  <rect width="960" height="680" fill="url(#bg)"/>
+  <ellipse cx="482" cy="565" rx="350" ry="42" fill="#c9d7cd" opacity=".34"/>
+  <g filter="url(#shadow)">
+    <g transform="translate(132 146)">
+      <path d="M38 0h206l38 86v362H0V86L38 0Z" fill="#242f35"/>
+      <path d="M38 0h206l38 86H0L38 0Z" fill="#344248"/>
+      <circle cx="220" cy="132" r="18" fill="#d0a158"/>
+      <rect x="64" y="208" width="154" height="24" rx="12" fill="#f5efe4"/>
+      <rect x="84" y="256" width="114" height="14" rx="7" fill="#f5efe4" opacity=".78"/>
+    </g>
+    <g transform="translate(356 104)">
+      <path d="M42 0h244l42 96v420H0V96L42 0Z" fill="#c99b5b"/>
+      <path d="M42 0h244l42 96H0L42 0Z" fill="#b88948"/>
+      <rect x="74" y="216" width="180" height="94" rx="20" fill="#f7f2e9"/>
+      <path d="M86 354h156" stroke="#fff3df" stroke-width="22" stroke-linecap="round"/>
+      <path d="M112 394h104" stroke="#fff3df" stroke-width="12" stroke-linecap="round"/>
+    </g>
+    <g transform="translate(622 170)">
+      <path d="M32 0h214l36 78v356H0V78L32 0Z" fill="#f6f2e8"/>
+      <path d="M32 0h214l36 78H0L32 0Z" fill="#dfd6c4"/>
+      <rect x="56" y="160" width="170" height="118" rx="22" fill="#2b8a6b"/>
+      <rect x="82" y="320" width="120" height="18" rx="9" fill="#b9d5c9"/>
+    </g>
+    <g transform="translate(682 368)">
+      <path d="M24 0h160l26 48v168H0V48L24 0Z" fill="#8d5c3d"/>
+      <path d="M24 0h160l26 48H0L24 0Z" fill="#a9734f"/>
+      <rect x="44" y="96" width="122" height="18" rx="9" fill="#fff4e8"/>
+    </g>
   </g>
 </svg>
