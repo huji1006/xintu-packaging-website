@@ -7,6 +7,7 @@ import {
   label,
   productCategories,
   type ProductCategory,
+  type ProductImage,
   type ProductItem,
 } from "./data/catalog";
 
@@ -381,13 +382,11 @@ function ProductGallery({
       <div className="gallery-grid">
         {product.galleryImages.map((image, index) => (
           <figure className="gallery-card" key={`${product.slug}-${index}`}>
-            <img src={image.src} alt={label(image.alt, language)} />
-            {image.pending && (
-              <figcaption>
-                <span>{String(index + 1).padStart(2, "0")}</span>
-                {t.productDetail.imagePending}
-              </figcaption>
-            )}
+            <ResponsiveProductImage
+              image={image}
+              alt={label(image.alt, language)}
+              sizes="(max-width: 620px) calc(100vw - 40px), (max-width: 900px) 45vw, 30vw"
+            />
           </figure>
         ))}
       </div>
@@ -398,7 +397,12 @@ function ProductGallery({
 function ProductImageTile({ product, language }: { product: ProductItem; language: Language }) {
   return (
     <div className="product-image-tile">
-      <img src={product.heroImage.src} alt={label(product.heroImage.alt, language)} />
+      <ResponsiveProductImage
+        image={product.heroImage}
+        alt={label(product.heroImage.alt, language)}
+        sizes="(max-width: 900px) calc(100vw - 40px), 46vw"
+        priority
+      />
     </div>
   );
 }
@@ -585,22 +589,29 @@ function CategoryGrid({
   return (
     <div className={large ? "category-grid large" : "category-grid"}>
       {productCategories.map((category) => (
-        <a className="category-card" href={toHash(`/products/${category.slug}`)} key={category.slug}>
-          <img
-            src={(category.items.find((item) => !item.heroImage.pending) ?? category.items[0])?.heroImage.src}
-            alt={label(category.name, language)}
-          />
-          <div>
-            <div className="category-meta">
-              <span>
-                {category.items.length} {t.productsPage.productCountLabel}
-              </span>
-            </div>
-            <h3>{label(category.name, language)}</h3>
-            <p>{label(category.summary, language)}</p>
-            <strong>{t.productsPage.viewCategory}</strong>
-          </div>
-        </a>
+        (() => {
+          const image = (category.items.find((item) => !item.heroImage.pending) ?? category.items[0])?.heroImage;
+
+          return (
+            <a className="category-card" href={toHash(`/products/${category.slug}`)} key={category.slug}>
+              <ResponsiveProductImage
+                image={image}
+                alt={label(category.name, language)}
+                sizes="(max-width: 620px) calc(100vw - 40px), (max-width: 900px) 45vw, 30vw"
+              />
+              <div>
+                <div className="category-meta">
+                  <span>
+                    {category.items.length} {t.productsPage.productCountLabel}
+                  </span>
+                </div>
+                <h3>{label(category.name, language)}</h3>
+                <p>{label(category.summary, language)}</p>
+                <strong>{t.productsPage.viewCategory}</strong>
+              </div>
+            </a>
+          );
+        })()
       ))}
       <div className="category-summary">
         <span>{productCategories.length}</span>
@@ -629,7 +640,11 @@ function ProductGrid({
           href={toHash(`/products/${product.parentSlug}/${product.slug}`)}
           key={`${product.parentSlug}-${product.slug}`}
         >
-          <img src={product.heroImage.src} alt={label(product.name, language)} />
+          <ResponsiveProductImage
+            image={product.heroImage}
+            alt={label(product.name, language)}
+            sizes="(max-width: 620px) calc(100vw - 40px), (max-width: 900px) 45vw, 45vw"
+          />
           <div>
             <h3>{label(product.name, language)}</h3>
             <p>{label(product.subtitle, language)}</p>
@@ -638,6 +653,33 @@ function ProductGrid({
         </a>
       ))}
     </div>
+  );
+}
+
+function ResponsiveProductImage({
+  image,
+  alt,
+  sizes,
+  priority = false,
+}: {
+  image?: ProductImage;
+  alt: string;
+  sizes: string;
+  priority?: boolean;
+}) {
+  if (!image) {
+    return null;
+  }
+
+  return (
+    <img
+      src={image.src}
+      srcSet={image.srcSet}
+      sizes={image.srcSet ? sizes : undefined}
+      alt={alt}
+      loading={priority ? "eager" : "lazy"}
+      decoding="async"
+    />
   );
 }
 

@@ -8,6 +8,7 @@ export type LocalizedText = {
 export type ProductImage = {
   src: string;
   alt: LocalizedText;
+  srcSet?: string;
   pending?: boolean;
 };
 
@@ -34,8 +35,21 @@ export type ProductCategory = {
 };
 
 const imagePlaceholder = "./assets/product-image-placeholder.svg";
+const responsiveWidths = [480, 900, 1400];
+const productImageVersion = "20260623-2";
 
 const text = (en: string, zh: string): LocalizedText => ({ en, zh });
+
+const optimizedImage = (src: string) => {
+  const base = src.replace(/\.png$/i, "");
+
+  return {
+    src: `${base}-900.webp?v=${productImageVersion}`,
+    srcSet: responsiveWidths
+      .map((width) => `${base}-${width}.webp?v=${productImageVersion} ${width}w`)
+      .join(", "),
+  };
+};
 
 const productImageSources: Record<string, string[]> = {
   "bubble-mailer/aluminum-bubble-mailer": [
@@ -47,7 +61,7 @@ const productImageSources: Record<string, string[]> = {
     "06-electronics-shipping-scene.png",
     "07-cosmetics-boutique-scene.png",
     "08-wholesale-supplier-scene.png",
-  ].map((file) => `./assets/products/bubble-mailer/aluminum-bubble-mailer/${file}?v=20260623-1`),
+  ].map((file) => `./assets/products/bubble-mailer/aluminum-bubble-mailer/${file}`),
   "bubble-mailer/biodegradable-bubble-mailer": [
     "01-hero-scene.png",
     "02-application-scene.png",
@@ -57,7 +71,7 @@ const productImageSources: Record<string, string[]> = {
     "06-industry-use-scene.png",
     "07-premium-lifestyle-scene.png",
     "08-wholesale-supplier-scene.png",
-  ].map((file) => `./assets/products/bubble-mailer/biodegradable-bubble-mailer/${file}?v=20260623-1`),
+  ].map((file) => `./assets/products/bubble-mailer/biodegradable-bubble-mailer/${file}`),
   "bubble-mailer/co-extruded-bubble-mailer": [
     "01-hero-scene.png",
     "02-application-scene.png",
@@ -67,7 +81,7 @@ const productImageSources: Record<string, string[]> = {
     "06-industry-use-scene.png",
     "07-premium-lifestyle-scene.png",
     "08-wholesale-supplier-scene.png",
-  ].map((file) => `./assets/products/bubble-mailer/co-extruded-bubble-mailer/${file}?v=20260623-1`),
+  ].map((file) => `./assets/products/bubble-mailer/co-extruded-bubble-mailer/${file}`),
   "bubble-mailer/kraft-paper-bubble-mailer": [
     "01-hero-scene.png",
     "02-application-scene.png",
@@ -77,7 +91,7 @@ const productImageSources: Record<string, string[]> = {
     "06-industry-use-scene.png",
     "07-premium-lifestyle-scene.png",
     "08-wholesale-supplier-scene.png",
-  ].map((file) => `./assets/products/bubble-mailer/kraft-paper-bubble-mailer/${file}?v=20260623-1`),
+  ].map((file) => `./assets/products/bubble-mailer/kraft-paper-bubble-mailer/${file}`),
   "bubble-mailer/pearlescent-bubble-mailer": [
     "01-hero-scene.png",
     "02-application-scene.png",
@@ -87,7 +101,7 @@ const productImageSources: Record<string, string[]> = {
     "06-industry-use-scene.png",
     "07-premium-lifestyle-scene.png",
     "08-wholesale-supplier-scene.png",
-  ].map((file) => `./assets/products/bubble-mailer/pearlescent-bubble-mailer/${file}?v=20260623-1`),
+  ].map((file) => `./assets/products/bubble-mailer/pearlescent-bubble-mailer/${file}`),
   "bubble-mailer/poly-bubble-mailer": [
     "01-hero-scene.png",
     "02-application-scene.png",
@@ -97,7 +111,7 @@ const productImageSources: Record<string, string[]> = {
     "06-industry-use-scene.png",
     "07-premium-lifestyle-scene.png",
     "08-wholesale-supplier-scene.png",
-  ].map((file) => `./assets/products/bubble-mailer/poly-bubble-mailer/${file}?v=20260623-1`),
+  ].map((file) => `./assets/products/bubble-mailer/poly-bubble-mailer/${file}`),
   "mailing-bag/biodegradable-mailing-bag": [
     "01-hero-scene.png",
     "02-application-scene.png",
@@ -107,7 +121,7 @@ const productImageSources: Record<string, string[]> = {
     "06-industry-use-scene.png",
     "07-premium-lifestyle-scene.png",
     "08-wholesale-supplier-scene.png",
-  ].map((file) => `./assets/products/mailing-bag/biodegradable-mailing-bag/${file}?v=20260623-1`),
+  ].map((file) => `./assets/products/mailing-bag/biodegradable-mailing-bag/${file}`),
 };
 
 const productText = (name: LocalizedText) => ({
@@ -117,18 +131,18 @@ const productText = (name: LocalizedText) => ({
   ),
   description: text(
     `${name.en} can be customized by size, material, color and printing requirements. Share your product details and quantity range so we can help compare workable options.`,
-    `${name.zh}可以根据尺寸、材料、颜色和印刷需求定制。你后面给到具体图片和需求后，页面可以继续补充更准确的产品展示。`,
+    `${name.zh}可根据尺寸、材料、颜色和印刷需求定制，适合需要清晰比较包装方案的品牌采购。`,
   ),
   sourcingNotes: text(
-    "Image slots are prepared for this product. Final product photos can be added after the selected images are confirmed.",
-    "这个产品页已经预留图片位置。等你确认每个产品的具体图片后，可以直接替换到对应位置。",
+    "Share the application, size, quantity and material preference so we can compare workable structures and sample options.",
+    "可根据应用场景、尺寸、数量和材料偏好，协助比较合适结构与打样方案。",
   ),
 });
 
 const gallery = (slug: string, name: LocalizedText, imageSourcesOrCount: string[] | number = 6): ProductImage[] => {
   if (Array.isArray(imageSourcesOrCount)) {
     return imageSourcesOrCount.map((src, index) => ({
-      src,
+      ...optimizedImage(src),
       alt: text(`${name.en} image ${index + 1}`, `${name.zh}图片 ${index + 1}`),
     }));
   }

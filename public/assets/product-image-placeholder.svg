@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 860" role="img" aria-labelledby="title desc">
-  <title id="title">Product image placeholder</title>
-  <desc id="desc">Neutral packaging image placeholder for pending product photos.</desc>
+  <title id="title">Packaging product reference</title>
+  <desc id="desc">Neutral packaging product reference illustration.</desc>
   <defs>
     <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
       <stop offset="0" stop-color="#f8fbf8"/>
@@ -31,5 +31,4 @@
     <rect x="822" y="495" width="150" height="22" rx="11" fill="#f8f1e6"/>
     <rect x="852" y="570" width="92" height="16" rx="8" fill="#f8f1e6"/>
   </g>
-  <text x="600" y="790" text-anchor="middle" fill="#5f6f7f" font-family="Inter, Arial, sans-serif" font-size="32" font-weight="700">Product photos pending</text>
 </svg>

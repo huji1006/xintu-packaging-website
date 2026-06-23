@@ -161,7 +161,7 @@ export const content: Record<
       productsEyebrow: "Product categories",
       productsTitle: "Packaging categories prepared for sourcing inquiries",
       productsText:
-        "Products are now organized by main category and product type, so each product can later receive its own photo gallery.",
+        "Explore practical packaging categories organized by main type and product structure.",
       whyEyebrow: "Why choose us",
       whyTitle: "A sourcing partner for practical packaging follow-up.",
       whyText:
@@ -174,7 +174,7 @@ export const content: Record<
     productsPage: {
       eyebrow: "Products",
       title: "Custom packaging categories for practical sourcing.",
-      text: "Choose a main category first, then review the related product types. Final product photos can be added product by product after confirmation.",
+      text: "Choose a main category first, then review related product types, common applications and customization options.",
       categoryCountLabel: "main categories",
       productCountLabel: "product types",
       viewCategory: "View category",
@@ -254,7 +254,7 @@ export const content: Record<
       commonOptions: "Common options",
       sourcingNote: "Sourcing note",
       galleryTitle: "Product image gallery",
-      imagePending: "Image pending",
+      imagePending: "Product reference",
       relatedEyebrow: "More in this category",
       relatedTitle: "Related product types",
     },
@@ -339,7 +339,7 @@ export const content: Record<
       heroImageAlt: "纸袋、快递袋、包装袋和包装盒示意图",
       productsEyebrow: "产品分类",
       productsTitle: "已按两级分类整理的包装产品",
-      productsText: "现在产品先按一级分类展示，再进入具体二级产品；后续每个产品都可以补自己的图片图库。",
+      productsText: "按一级分类和具体产品结构展示常用包装，方便客户快速了解适合的方向。",
       whyEyebrow: "为什么选择我们",
       whyTitle: "专注实际跟进的包装采购伙伴。",
       whyText:
@@ -352,7 +352,7 @@ export const content: Record<
     productsPage: {
       eyebrow: "产品",
       title: "适合实际采购沟通的定制包装分类。",
-      text: "先选择一级分类，再查看下面对应的二级产品。图片还没最终确认的产品，页面会先显示预留图片位。",
+      text: "先选择一级分类，再查看对应二级产品、常见用途和可定制选项。",
       categoryCountLabel: "个一级分类",
       productCountLabel: "个二级产品",
       viewCategory: "查看分类",
@@ -430,7 +430,7 @@ export const content: Record<
       commonOptions: "常见选项",
       sourcingNote: "采购说明",
       galleryTitle: "产品图片图库",
-      imagePending: "图片待更新",
+      imagePending: "产品参考图",
       relatedEyebrow: "同类产品",
       relatedTitle: "相关二级产品",
     },
