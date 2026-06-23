@@ -1,17 +1,4 @@
-export type Language = "en" | "zh";
-
-export type Product = {
-  slug: string;
-  formValue: string;
-  name: string;
-  shortName: string;
-  subtitle: string;
-  description: string;
-  image: string;
-  bestFor: string[];
-  commonOptions: string[];
-  sourcingNotes: string;
-};
+import type { Language } from "./catalog";
 
 type NavItem = {
   label: string;
@@ -23,6 +10,8 @@ type PageHeroContent = {
   title: string;
   text: string;
 };
+
+export type { Language };
 
 export const company = {
   brandName: "Xintu Packaging Solutions",
@@ -64,7 +53,16 @@ export const content: Record<
       customersEyebrow: string;
       customersTitle: string;
     };
-    productsPage: PageHeroContent;
+    productsPage: PageHeroContent & {
+      categoryCountLabel: string;
+      productCountLabel: string;
+      viewCategory: string;
+    };
+    categoryPage: {
+      eyebrow: string;
+      allProducts: string;
+      viewProduct: string;
+    };
     aboutPage: PageHeroContent & {
       introTitle: string;
       companyDetailsTitle: string;
@@ -112,11 +110,13 @@ export const content: Record<
     productDetail: {
       eyebrow: string;
       requestButton: string;
-      bestFor: string;
+      applications: string;
       commonOptions: string;
       sourcingNote: string;
-      moreEyebrow: string;
-      moreTitle: string;
+      galleryTitle: string;
+      imagePending: string;
+      relatedEyebrow: string;
+      relatedTitle: string;
     };
     cta: {
       eyebrow: string;
@@ -131,7 +131,6 @@ export const content: Record<
     };
     notFound: PageHeroContent;
     companyIntro: string[];
-    products: Product[];
     serviceSteps: Array<{ title: string; text: string }>;
     customerTypes: string[];
     trustPoints: string[];
@@ -154,15 +153,15 @@ export const content: Record<
       hero: {
         eyebrow: "Custom packaging sourcing from China",
         title: "Custom packaging support for growing overseas brands.",
-        text: "We help eCommerce, food, beauty, apparel and product brands source custom paper bags, mailer bags, food pouches, packaging boxes and brand packaging kits with practical follow-up from sample to shipment.",
+        text: "We help eCommerce, food, beauty, apparel and product brands source custom packaging with practical follow-up from sample to shipment.",
       },
       primaryCta: "Get a Quote",
       secondaryCta: "View Products",
       heroImageAlt: "Paper bags, mailer bags, pouches and boxes",
       productsEyebrow: "Product categories",
-      productsTitle: "Common packaging types for first inquiries",
+      productsTitle: "Packaging categories prepared for sourcing inquiries",
       productsText:
-        "The first version focuses on high-frequency packaging categories that overseas small brands usually ask for first.",
+        "Products are now organized by main category and product type, so each product can later receive its own photo gallery.",
       whyEyebrow: "Why choose us",
       whyTitle: "A sourcing partner for practical packaging follow-up.",
       whyText:
@@ -175,7 +174,15 @@ export const content: Record<
     productsPage: {
       eyebrow: "Products",
       title: "Custom packaging categories for practical sourcing.",
-      text: "Start from one of the common packaging types below, or send us your product details if you are not sure which structure is suitable.",
+      text: "Choose a main category first, then review the related product types. Final product photos can be added product by product after confirmation.",
+      categoryCountLabel: "main categories",
+      productCountLabel: "product types",
+      viewCategory: "View category",
+    },
+    categoryPage: {
+      eyebrow: "Product category",
+      allProducts: "All product types",
+      viewProduct: "View product",
     },
     aboutPage: {
       eyebrow: "About Xintu",
@@ -241,13 +248,15 @@ export const content: Record<
       },
     },
     productDetail: {
-      eyebrow: "Product category",
+      eyebrow: "Product type",
       requestButton: "Request this Packaging",
-      bestFor: "Best for",
+      applications: "Applications",
       commonOptions: "Common options",
       sourcingNote: "Sourcing note",
-      moreEyebrow: "More options",
-      moreTitle: "Other packaging categories",
+      galleryTitle: "Product image gallery",
+      imagePending: "Image pending",
+      relatedEyebrow: "More in this category",
+      relatedTitle: "Related product types",
     },
     cta: {
       eyebrow: "Ready to compare options?",
@@ -270,125 +279,6 @@ export const content: Record<
       "Xintu Packaging Solutions Co., Ltd. is a Guangzhou-based packaging sourcing partner helping overseas small and growing brands develop custom packaging with flexible MOQ, custom printing and practical supplier support.",
       "We work with packaging manufacturers across China to help clients compare options, request samples, confirm materials, follow up production and arrange pre-shipment photo or video checks before delivery.",
       "Our focus is simple: help eCommerce, food, beauty, apparel and product brands source packaging more clearly, with fewer communication gaps and more reliable follow-up.",
-    ],
-    products: [
-      {
-        slug: "custom-paper-bags",
-        formValue: "Custom Paper Bags",
-        name: "Custom Paper Bags",
-        shortName: "Paper Bags",
-        subtitle: "Printed shopping bags, kraft bags and takeaway paper bags.",
-        description:
-          "A practical choice for retail, apparel, gifts, cafes and takeaway brands that need a branded carrying solution with flexible paper, handle and print options.",
-        image: "./assets/product-paper-bags-photo.jpg?v=20260621-4",
-        bestFor: ["Retail shops", "Apparel brands", "Coffee shops", "Gift packaging"],
-        commonOptions: [
-          "Kraft paper",
-          "White card paper",
-          "Twisted paper handles",
-          "Cotton or ribbon handles",
-          "Matte or gloss lamination",
-        ],
-        sourcingNotes:
-          "Useful for brands that want visible offline brand exposure without starting from a high-complexity packaging project.",
-      },
-      {
-        slug: "custom-mailer-bags",
-        formValue: "Custom Mailer Bags",
-        name: "Custom Mailer Bags",
-        shortName: "Mailer Bags",
-        subtitle: "Poly mailers, compostable mailers, kraft mailers and padded mailers.",
-        description:
-          "Lightweight mailing bags for Shopify, DTC, fashion and accessory brands that ship soft goods or small products internationally.",
-        image: "./assets/product-mailer-bags-photo.jpg?v=20260621-4",
-        bestFor: ["DTC stores", "Fashion brands", "Accessories", "Subscription shipments"],
-        commonOptions: [
-          "Self-seal strip",
-          "Double adhesive strip",
-          "Recycled PE",
-          "Compostable material",
-          "Bubble lining",
-        ],
-        sourcingNotes:
-          "A high-frequency inquiry category because size, material and printing can be adjusted quickly for different order volumes.",
-      },
-      {
-        slug: "food-coffee-packaging-bags",
-        formValue: "Food & Coffee Packaging Bags",
-        name: "Food & Coffee Packaging Bags",
-        shortName: "Food & Coffee Bags",
-        subtitle: "Coffee bags, tea bags, pet food bags, stand-up food pouches and flat-bottom bags.",
-        description:
-          "Flexible food packaging for dry goods and specialty products, with common options for zipper, valve, window and barrier materials.",
-        image: "./assets/product-food-coffee-bags-photo.jpg?v=20260621-4",
-        bestFor: ["Coffee roasters", "Tea brands", "Pet food brands", "Snack brands"],
-        commonOptions: [
-          "Flat-bottom bags",
-          "Stand-up pouches",
-          "Zipper closure",
-          "Degassing valve",
-          "Clear window",
-          "Foil barrier",
-        ],
-        sourcingNotes:
-          "Good for brands that need sample checks before bulk production because material feel, sealing and print color matter.",
-      },
-      {
-        slug: "custom-stand-up-pouches",
-        formValue: "Custom Stand-Up Pouches",
-        name: "Custom Stand-Up Pouches",
-        shortName: "Stand-Up Pouches",
-        subtitle: "Flexible pouches for beauty, wellness, refill, accessory and small product packaging.",
-        description:
-          "A versatile pouch format for non-food and dry product applications where brands need a clean retail look and flexible order quantities.",
-        image: "./assets/product-stand-up-pouches-photo.jpg?v=20260621-4",
-        bestFor: ["Beauty refills", "Candles and aroma", "Supplements", "Small accessories"],
-        commonOptions: ["Matte finish", "Gloss finish", "Hang hole", "Tear notch", "Zipper", "Custom size"],
-        sourcingNotes:
-          "A strong first-version category because one page can cover many growing-brand use cases without overpromising a fixed stock range.",
-      },
-      {
-        slug: "custom-packaging-boxes",
-        formValue: "Custom Packaging Boxes",
-        name: "Custom Packaging Boxes",
-        shortName: "Packaging Boxes",
-        subtitle: "Mailer boxes, folding cartons, gift boxes and protective inserts.",
-        description:
-          "Custom box packaging for eCommerce, beauty, electronics, accessories and energy product components that need a more structured presentation.",
-        image: "./assets/product-packaging-boxes-photo.jpg?v=20260621-4",
-        bestFor: ["Electronics accessories", "Beauty products", "Gift sets", "Energy product components"],
-        commonOptions: [
-          "Corrugated mailer boxes",
-          "Folding cartons",
-          "Rigid boxes",
-          "Paper inserts",
-          "Foam inserts",
-          "Spot UV or foil stamping",
-        ],
-        sourcingNotes:
-          "Electronic and energy product packaging is included here as an application scenario, especially when inserts and protective structure are needed.",
-      },
-      {
-        slug: "brand-packaging-kit-accessories",
-        formValue: "Brand Packaging Kit & Accessories",
-        name: "Brand Packaging Kit & Accessories",
-        shortName: "Brand Packaging Kit",
-        subtitle: "Stickers, hang tags, cards, tissue paper and coordinated packaging sets.",
-        description:
-          "A flexible way for small brands to upgrade unboxing with a coordinated set of printed packaging accessories and simple add-ons.",
-        image: "./assets/product-brand-kit-photo.jpg?v=20260621-4",
-        bestFor: ["New product launches", "Influencer kits", "Apparel brands", "Gift bundles"],
-        commonOptions: [
-          "Thank-you cards",
-          "Sticker rolls",
-          "Hang tags",
-          "Tissue paper",
-          "Sleeves",
-          "Mixed packaging sets",
-        ],
-        sourcingNotes:
-          "Helpful for overseas brands that do not yet know the exact packaging format but want a polished, consistent customer experience.",
-      },
     ],
     serviceSteps: [
       {
@@ -442,14 +332,14 @@ export const content: Record<
       hero: {
         eyebrow: "中国定制包装采购支持",
         title: "为海外成长型品牌提供定制包装采购支持。",
-        text: "我们帮助电商品牌、食品饮品品牌、美妆香薰品牌、服装配饰品牌和产品品牌，从中国采购定制纸袋、快递袋、食品袋、包装盒和品牌包装套装，并协助从打样到出货前检查的沟通跟进。",
+        text: "我们帮助电商、食品、美妆、服装配饰和产品品牌，从中国采购定制包装，并协助从打样到出货前检查的沟通跟进。",
       },
       primaryCta: "获取报价",
       secondaryCta: "查看产品",
       heroImageAlt: "纸袋、快递袋、包装袋和包装盒示意图",
       productsEyebrow: "产品分类",
-      productsTitle: "适合第一批询盘的常用包装类型",
-      productsText: "第一版先聚焦海外中小品牌最常咨询、最容易落地的高频包装分类。",
+      productsTitle: "已按两级分类整理的包装产品",
+      productsText: "现在产品先按一级分类展示，再进入具体二级产品；后续每个产品都可以补自己的图片图库。",
       whyEyebrow: "为什么选择我们",
       whyTitle: "专注实际跟进的包装采购伙伴。",
       whyText:
@@ -462,7 +352,15 @@ export const content: Record<
     productsPage: {
       eyebrow: "产品",
       title: "适合实际采购沟通的定制包装分类。",
-      text: "你可以先从下面这些常见包装类型开始了解；如果不确定适合哪种结构，也可以直接发送产品信息给我们。",
+      text: "先选择一级分类，再查看下面对应的二级产品。图片还没最终确认的产品，页面会先显示预留图片位。",
+      categoryCountLabel: "个一级分类",
+      productCountLabel: "个二级产品",
+      viewCategory: "查看分类",
+    },
+    categoryPage: {
+      eyebrow: "产品分类",
+      allProducts: "全部二级产品",
+      viewProduct: "查看产品",
     },
     aboutPage: {
       eyebrow: "关于信途",
@@ -526,13 +424,15 @@ export const content: Record<
       },
     },
     productDetail: {
-      eyebrow: "产品分类",
+      eyebrow: "产品类型",
       requestButton: "咨询这类包装",
-      bestFor: "适合用途",
+      applications: "适合用途",
       commonOptions: "常见选项",
       sourcingNote: "采购说明",
-      moreEyebrow: "更多选择",
-      moreTitle: "其他包装分类",
+      galleryTitle: "产品图片图库",
+      imagePending: "图片待更新",
+      relatedEyebrow: "同类产品",
+      relatedTitle: "相关二级产品",
     },
     cta: {
       eyebrow: "准备比较方案？",
@@ -554,86 +454,6 @@ export const content: Record<
       "Xintu Packaging Solutions Co., Ltd. 是一家位于广州的包装采购服务伙伴，帮助海外中小品牌和成长型品牌开发定制包装，支持灵活起订量、定制印刷和实际采购沟通。",
       "我们与中国的包装生产资源保持沟通，帮助客户比较方案、申请样品、确认材料、跟进生产，并在出货前协助获取图片或视频检查。",
       "我们的重点很简单：帮助电商、食品、美妆、服装和产品品牌更清楚地完成包装采购，减少沟通误差，让后续跟进更可靠。",
-    ],
-    products: [
-      {
-        slug: "custom-paper-bags",
-        formValue: "Custom Paper Bags",
-        name: "定制纸袋",
-        shortName: "纸袋",
-        subtitle: "印刷购物袋、牛皮纸袋和外卖纸袋。",
-        description:
-          "适合零售、服装、礼品、咖啡店和外卖品牌，用来做有品牌感的手提包装，可根据纸张、手提绳和印刷方式灵活定制。",
-        image: "./assets/product-paper-bags-photo.jpg?v=20260621-4",
-        bestFor: ["零售店", "服装品牌", "咖啡店", "礼品包装"],
-        commonOptions: ["牛皮纸", "白卡纸", "纸绳手挽", "棉绳或丝带手挽", "哑膜或亮膜"],
-        sourcingNotes: "适合想提升线下品牌露出、但不想一开始做太复杂包装项目的品牌。",
-      },
-      {
-        slug: "custom-mailer-bags",
-        formValue: "Custom Mailer Bags",
-        name: "定制快递袋",
-        shortName: "快递袋",
-        subtitle: "塑料快递袋、可降解快递袋、牛皮纸邮寄袋和气泡袋。",
-        description:
-          "适合 Shopify、DTC、服装和配饰品牌寄送软性产品或小件产品，重量轻，尺寸和印刷调整比较灵活。",
-        image: "./assets/product-mailer-bags-photo.jpg?v=20260621-4",
-        bestFor: ["DTC 电商品牌", "服装品牌", "配饰产品", "订阅制发货"],
-        commonOptions: ["自粘封口", "双胶条", "再生 PE", "可降解材料", "气泡内衬"],
-        sourcingNotes: "这是很常见的询盘分类，因为尺寸、材料和印刷可以根据不同数量快速调整。",
-      },
-      {
-        slug: "food-coffee-packaging-bags",
-        formValue: "Food & Coffee Packaging Bags",
-        name: "食品和咖啡包装袋",
-        shortName: "食品咖啡袋",
-        subtitle: "咖啡袋、茶叶袋、宠物食品袋、食品自立袋和八边封袋。",
-        description:
-          "适合干货和特色食品的软包装，可根据需要选择拉链、气阀、开窗和阻隔材料等常见配置。",
-        image: "./assets/product-food-coffee-bags-photo.jpg?v=20260621-4",
-        bestFor: ["咖啡烘焙品牌", "茶叶品牌", "宠物食品品牌", "零食品牌"],
-        commonOptions: ["八边封袋", "自立袋", "拉链封口", "单向排气阀", "透明开窗", "铝箔阻隔材料"],
-        sourcingNotes: "适合需要先看样品再做大货的品牌，因为材料手感、封口效果和印刷颜色都很重要。",
-      },
-      {
-        slug: "custom-stand-up-pouches",
-        formValue: "Custom Stand-Up Pouches",
-        name: "定制自立袋",
-        shortName: "自立袋",
-        subtitle: "适合美妆、香薰、补充装、配件和小产品的通用软包装。",
-        description:
-          "一种应用范围很广的袋型，适合非食品和干燥类产品，能做出干净的零售展示效果，同时支持比较灵活的订购数量。",
-        image: "./assets/product-stand-up-pouches-photo.jpg?v=20260621-4",
-        bestFor: ["美妆补充装", "香薰产品", "营养补充品", "小配件"],
-        commonOptions: ["哑面效果", "亮面效果", "挂孔", "易撕口", "拉链", "定制尺寸"],
-        sourcingNotes: "这个分类适合作为第一版主推，因为一个页面可以覆盖很多成长型品牌的常见使用场景。",
-      },
-      {
-        slug: "custom-packaging-boxes",
-        formValue: "Custom Packaging Boxes",
-        name: "定制包装盒",
-        shortName: "包装盒",
-        subtitle: "飞机盒、折叠彩盒、礼品盒和保护内托。",
-        description:
-          "适合电商、美妆、电子配件、礼品套装和新能源配件等需要更有结构感和保护性的产品包装。",
-        image: "./assets/product-packaging-boxes-photo.jpg?v=20260621-4",
-        bestFor: ["电子配件", "美妆产品", "礼品套装", "新能源产品配件"],
-        commonOptions: ["瓦楞飞机盒", "折叠彩盒", "硬盒", "纸内托", "泡棉内托", "局部 UV 或烫金"],
-        sourcingNotes: "电子和新能源配件包装先放在这个分类下，特别适合需要内托和保护结构的产品。",
-      },
-      {
-        slug: "brand-packaging-kit-accessories",
-        formValue: "Brand Packaging Kit & Accessories",
-        name: "品牌包装套装和配件",
-        shortName: "品牌包装套装",
-        subtitle: "贴纸、吊牌、卡片、包装纸、纸巾纸和整套品牌包装组合。",
-        description:
-          "适合中小品牌用较灵活的方式提升开箱体验，通过一组统一风格的包装配件和简单加项，让品牌感更完整。",
-        image: "./assets/product-brand-kit-photo.jpg?v=20260621-4",
-        bestFor: ["新品发布", "达人礼盒", "服装品牌", "礼品组合"],
-        commonOptions: ["感谢卡", "贴纸卷", "吊牌", "纸巾纸", "包装套筒", "组合包装套装"],
-        sourcingNotes: "适合还不确定具体包装结构，但希望整体开箱体验更统一、更专业的海外品牌。",
-      },
     ],
     serviceSteps: [
       {
