@@ -24,7 +24,7 @@ export const company = {
   locationZh: "中国广州",
   email: "judy@xintutrade.com",
   whatsapp: "+86 000 0000 0000",
-  formEndpoint: "",
+  formEndpoint: "https://formsubmit.co/ajax/judy@xintutrade.com",
 };
 
 export const content: Record<
@@ -259,7 +259,7 @@ export const content: Record<
         noEndpoint:
           "The inquiry form receiving address is not configured yet. Please contact us by email for now.",
         sending: "Sending your inquiry...",
-        success: "Thanks. Your inquiry has been sent.",
+        success: "Thanks. Your inquiry has been sent. If this is the first test, please check the email inbox to activate form delivery.",
         error: "We could not send the form right now. Please email us directly.",
       },
     },
@@ -443,7 +443,7 @@ export const content: Record<
       status: {
         noEndpoint: "询盘表单接收地址还未配置。请先通过邮箱联系我们。",
         sending: "正在发送询盘...",
-        success: "谢谢，你的询盘已发送。",
+        success: "谢谢，你的询盘已发送。如果这是第一次测试，请到邮箱里确认并激活表单接收。",
         error: "当前暂时无法提交表单，请直接发送邮件联系我们。",
       },
     },

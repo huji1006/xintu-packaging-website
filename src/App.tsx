@@ -570,6 +570,9 @@ function QuotePage({ t, language }: { t: (typeof content)[Language]; language: L
       <PageHero eyebrow={t.quotePage.eyebrow} title={t.quotePage.title} text={t.quotePage.text} />
       <section className="section quote-layout">
         <form className="quote-form" onSubmit={handleSubmit}>
+          <input type="hidden" name="_subject" value="New inquiry from xintutrade.com" />
+          <input type="hidden" name="_template" value="table" />
+          <input type="hidden" name="_captcha" value="false" />
           <label>
             {t.quotePage.fields.name}
             <input name="name" required autoComplete="name" />
