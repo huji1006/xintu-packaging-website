@@ -542,16 +542,11 @@ function QuotePage({ t, language }: { t: (typeof content)[Language]; language: L
   }, [t]);
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    if (!company.formEndpoint) {
-      event.preventDefault();
-      setStatus(t.quotePage.status.noEndpoint);
-      return;
-    }
-
     event.preventDefault();
     setStatus(t.quotePage.status.sending);
     try {
-      await fetch(company.formEndpoint, {
+      const endpoint = company.formEndpoint || `https://formsubmit.co/ajax/${company.email}`;
+      await fetch(endpoint, {
         method: "POST",
         mode: "no-cors",
         body: new FormData(event.currentTarget),

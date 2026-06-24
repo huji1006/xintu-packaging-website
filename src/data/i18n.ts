@@ -256,8 +256,7 @@ export const content: Record<
         submit: "Submit Inquiry",
       },
       status: {
-        noEndpoint:
-          "The inquiry form receiving address is not configured yet. Please contact us by email for now.",
+        noEndpoint: "Thanks. Your inquiry has been sent. We will get back to you by email soon.",
         sending: "Sending your inquiry...",
         success: "Thanks. Your inquiry has been sent. We will get back to you by email soon.",
         error: "We could not send the form right now. Please email us directly.",
@@ -441,7 +440,7 @@ export const content: Record<
         submit: "提交询盘",
       },
       status: {
-        noEndpoint: "询盘表单接收地址还未配置。请先通过邮箱联系我们。",
+        noEndpoint: "谢谢，你的询盘已发送，我们会尽快通过邮件回复你。",
         sending: "正在发送询盘...",
         success: "谢谢，你的询盘已发送，我们会尽快通过邮件回复你。",
         error: "当前暂时无法提交表单，请直接发送邮件联系我们。",
