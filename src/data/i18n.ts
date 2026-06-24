@@ -57,6 +57,14 @@ export const content: Record<
       categoryCountLabel: string;
       productCountLabel: string;
       viewCategory: string;
+      allCategories: string;
+      catalogTitle: string;
+      quickFilterLabel: string;
+      sidebarTitle: string;
+      viewDetails: string;
+      getQuote: string;
+      notSureTitle: string;
+      notSureText: string;
     };
     categoryPage: {
       eyebrow: string;
@@ -178,6 +186,14 @@ export const content: Record<
       categoryCountLabel: "main categories",
       productCountLabel: "product types",
       viewCategory: "View category",
+      allCategories: "All",
+      catalogTitle: "Product catalog",
+      quickFilterLabel: "Quick filters",
+      sidebarTitle: "Categories",
+      viewDetails: "View details",
+      getQuote: "Get quote",
+      notSureTitle: "Not sure which packaging fits?",
+      notSureText: "Send us your product details and reference style. We can help compare suitable packaging structures.",
     },
     categoryPage: {
       eyebrow: "Product category",
@@ -356,6 +372,14 @@ export const content: Record<
       categoryCountLabel: "个一级分类",
       productCountLabel: "个二级产品",
       viewCategory: "查看分类",
+      allCategories: "全部",
+      catalogTitle: "产品目录",
+      quickFilterLabel: "快速筛选",
+      sidebarTitle: "产品分类",
+      viewDetails: "查看详情",
+      getQuote: "获取报价",
+      notSureTitle: "不确定适合哪种包装？",
+      notSureText: "把产品信息和参考风格发给我们，我们可以帮你比较更合适的包装结构。",
     },
     categoryPage: {
       eyebrow: "产品分类",

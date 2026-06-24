@@ -18,6 +18,22 @@ const routeFromHash = () => {
 
 const toHash = (path: string) => `#${path}`;
 
+const quotePath = (product?: ProductItem) => {
+  if (!product) {
+    return toHash("/quote");
+  }
+  return `${toHash("/quote")}?product=${encodeURIComponent(product.slug)}`;
+};
+
+const getQuoteProductFromHash = () => {
+  if (typeof window === "undefined") {
+    return "";
+  }
+  const [, query = ""] = window.location.hash.split("?");
+  const slug = new URLSearchParams(query).get("product");
+  return allProducts.find((product) => product.slug === slug)?.formValue ?? "";
+};
+
 const getInitialLanguage = (): Language => {
   if (typeof window === "undefined") {
     return "en";
@@ -73,7 +89,7 @@ function App() {
         {route === "/about" && <AboutPage t={t} />}
         {route === "/quote" && <QuotePage t={t} language={language} />}
         {routeParts[0] === "products" && routeParts.length === 2 && activeCategory && (
-          <CategoryPage category={activeCategory} t={t} language={language} />
+          <ProductsPage selectedCategory={activeCategory} t={t} language={language} />
         )}
         {routeParts[0] === "products" && routeParts.length === 2 && !activeCategory && <NotFoundPage t={t} />}
         {routeParts[0] === "products" && routeParts.length === 3 && activeProduct && (
@@ -256,12 +272,20 @@ function HomePage({ t, language }: { t: (typeof content)[Language]; language: La
   );
 }
 
-function ProductsPage({ t, language }: { t: (typeof content)[Language]; language: Language }) {
+function ProductsPage({
+  t,
+  language,
+  selectedCategory,
+}: {
+  t: (typeof content)[Language];
+  language: Language;
+  selectedCategory?: ProductCategory;
+}) {
   return (
     <>
       <PageHero eyebrow={t.productsPage.eyebrow} title={t.productsPage.title} text={t.productsPage.text} />
       <section className="section">
-        <CategoryGrid t={t} language={language} large />
+        <ProductCatalog selectedCategory={selectedCategory} t={t} language={language} />
       </section>
       <CallToAction t={t} />
     </>
@@ -295,7 +319,12 @@ function CategoryPage({
           <p className="eyebrow">{t.productsPage.productCountLabel}</p>
           <h2>{t.categoryPage.allProducts}</h2>
         </div>
-        <ProductGrid products={category.items} language={language} ctaLabel={t.categoryPage.viewProduct} />
+        <ProductGrid
+          products={category.items}
+          language={language}
+          viewLabel={t.productsPage.viewDetails}
+          quoteLabel={t.productsPage.getQuote}
+        />
       </section>
       <CallToAction t={t} />
     </>
@@ -313,6 +342,12 @@ function ProductPage({
   t: (typeof content)[Language];
   language: Language;
 }) {
+  const [selectedImage, setSelectedImage] = useState(product.heroImage);
+
+  useEffect(() => {
+    setSelectedImage(product.heroImage);
+  }, [product]);
+
   return (
     <>
       <section className="product-hero">
@@ -327,11 +362,16 @@ function ProductPage({
           <p className="eyebrow">{t.productDetail.eyebrow}</p>
           <h1>{label(product.name, language)}</h1>
           <p>{label(product.description, language)}</p>
-          <a className="button primary" href={`${toHash("/quote")}?product=${product.slug}`}>
+          <a className="button primary" href={quotePath(product)}>
             {t.productDetail.requestButton}
           </a>
         </div>
-        <ProductImageTile product={product} language={language} />
+        <ProductImageTile
+          product={product}
+          selectedImage={selectedImage}
+          setSelectedImage={setSelectedImage}
+          language={language}
+        />
       </section>
       <section className="section">
         <div className="detail-grid">
@@ -380,8 +420,8 @@ function ProductGallery({
         <h2>{t.productDetail.galleryTitle}</h2>
       </div>
       <div className="gallery-grid">
-        {product.galleryImages.map((image, index) => (
-          <figure className="gallery-card" key={`${product.slug}-${index}`}>
+        {product.galleryImages.map((image) => (
+          <figure className="gallery-card" key={`${product.slug}-${image.src}`}>
             <ResponsiveProductImage
               image={image}
               alt={label(image.alt, language)}
@@ -394,15 +434,46 @@ function ProductGallery({
   );
 }
 
-function ProductImageTile({ product, language }: { product: ProductItem; language: Language }) {
+function ProductImageTile({
+  product,
+  selectedImage,
+  setSelectedImage,
+  language,
+}: {
+  product: ProductItem;
+  selectedImage: ProductImage;
+  setSelectedImage: (image: ProductImage) => void;
+  language: Language;
+}) {
   return (
-    <div className="product-image-tile">
-      <ResponsiveProductImage
-        image={product.heroImage}
-        alt={label(product.heroImage.alt, language)}
-        sizes="(max-width: 900px) calc(100vw - 40px), 46vw"
-        priority
-      />
+    <div className="product-media">
+      <div className="product-image-tile">
+        <ResponsiveProductImage
+          image={selectedImage}
+          alt={label(selectedImage.alt, language)}
+          sizes="(max-width: 900px) calc(100vw - 40px), 46vw"
+          priority
+        />
+      </div>
+      {product.galleryImages.length > 1 && (
+        <div className="thumbnail-row" aria-label={label(product.name, language)}>
+          {product.galleryImages.map((image, index) => (
+            <button
+              className={image.src === selectedImage.src ? "selected" : ""}
+              key={`${product.slug}-thumb-${index}`}
+              type="button"
+              onClick={() => setSelectedImage(image)}
+              aria-label={label(image.alt, language)}
+            >
+              <ResponsiveProductImage
+                image={image}
+                alt={label(image.alt, language)}
+                sizes="96px"
+              />
+            </button>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
@@ -450,6 +521,7 @@ function AboutPage({ t }: { t: (typeof content)[Language] }) {
 
 function QuotePage({ t, language }: { t: (typeof content)[Language]; language: Language }) {
   const [status, setStatus] = useState("");
+  const selectedProductValue = useMemo(getQuoteProductFromHash, []);
 
   useEffect(() => {
     setStatus("");
@@ -502,7 +574,7 @@ function QuotePage({ t, language }: { t: (typeof content)[Language]; language: L
           </label>
           <label>
             {t.quotePage.fields.productType}
-            <select name="productType" required defaultValue="">
+            <select name="productType" required defaultValue={selectedProductValue}>
               <option value="" disabled>
                 {t.quotePage.fields.productTypePlaceholder}
               </option>
@@ -623,34 +695,122 @@ function CategoryGrid({
   );
 }
 
+function ProductCatalog({
+  selectedCategory,
+  t,
+  language,
+}: {
+  selectedCategory?: ProductCategory;
+  t: (typeof content)[Language];
+  language: Language;
+}) {
+  const visibleProducts = selectedCategory ? selectedCategory.items : allProducts;
+  const activeLabel = selectedCategory ? label(selectedCategory.name, language) : t.productsPage.allCategories;
+
+  return (
+    <div className="catalog-shell">
+      <div className="catalog-mobile-filter">
+        <p>{t.productsPage.quickFilterLabel}</p>
+        <div>
+          <a className={!selectedCategory ? "active" : ""} href={toHash("/products")}>
+            {t.productsPage.allCategories}
+          </a>
+          {productCategories.map((category) => (
+            <a
+              className={selectedCategory?.slug === category.slug ? "active" : ""}
+              href={toHash(`/products/${category.slug}`)}
+              key={category.slug}
+            >
+              {label(category.name, language)}
+            </a>
+          ))}
+        </div>
+      </div>
+
+      <aside className="catalog-sidebar">
+        <h2>{t.productsPage.sidebarTitle}</h2>
+        <a className={!selectedCategory ? "active" : ""} href={toHash("/products")}>
+          <span>{t.productsPage.allCategories}</span>
+          <small>{allProducts.length}</small>
+        </a>
+        {productCategories.map((category) => (
+          <a
+            className={selectedCategory?.slug === category.slug ? "active" : ""}
+            href={toHash(`/products/${category.slug}`)}
+            key={category.slug}
+          >
+            <span>{label(category.name, language)}</span>
+            <small>{category.items.length}</small>
+          </a>
+        ))}
+        <div className="catalog-help">
+          <h3>{t.productsPage.notSureTitle}</h3>
+          <p>{t.productsPage.notSureText}</p>
+          <a className="button primary" href={quotePath()}>
+            {t.productsPage.getQuote}
+          </a>
+        </div>
+      </aside>
+
+      <div className="catalog-content">
+        <div className="catalog-toolbar">
+          <div>
+            <p className="eyebrow">{t.productsPage.catalogTitle}</p>
+            <h2>{activeLabel}</h2>
+          </div>
+          <span>
+            {visibleProducts.length} {t.productsPage.productCountLabel}
+          </span>
+        </div>
+        <ProductGrid
+          products={visibleProducts}
+          language={language}
+          viewLabel={t.productsPage.viewDetails}
+          quoteLabel={t.productsPage.getQuote}
+        />
+      </div>
+    </div>
+  );
+}
+
 function ProductGrid({
   products,
   language,
-  ctaLabel,
+  viewLabel,
+  quoteLabel,
 }: {
   products: ProductItem[];
   language: Language;
-  ctaLabel: string;
+  viewLabel: string;
+  quoteLabel: string;
 }) {
   return (
-    <div className="product-grid large">
+    <div className="product-grid catalog-products">
       {products.map((product) => (
-        <a
+        <article
           className="product-card"
-          href={toHash(`/products/${product.parentSlug}/${product.slug}`)}
           key={`${product.parentSlug}-${product.slug}`}
         >
-          <ResponsiveProductImage
-            image={product.heroImage}
-            alt={label(product.name, language)}
-            sizes="(max-width: 620px) calc(100vw - 40px), (max-width: 900px) 45vw, 45vw"
-          />
+          <a className="product-card-media" href={toHash(`/products/${product.parentSlug}/${product.slug}`)}>
+            <ResponsiveProductImage
+              image={product.heroImage}
+              alt={label(product.name, language)}
+              sizes="(max-width: 620px) calc(100vw - 40px), (max-width: 900px) 45vw, 30vw"
+            />
+          </a>
           <div>
             <h3>{label(product.name, language)}</h3>
             <p>{label(product.subtitle, language)}</p>
-            <strong>{ctaLabel}</strong>
+            <div className="product-card-actions">
+              <a className="button secondary" href={toHash(`/products/${product.parentSlug}/${product.slug}`)}>
+                {viewLabel}
+              </a>
+              <a className="button primary" href={quotePath(product)}>
+                {quoteLabel}
+              </a>
+            </div>
           </div>
-        </a>
+        </article>
       ))}
     </div>
   );
@@ -706,7 +866,12 @@ function RelatedProducts({
         <p className="eyebrow">{t.productDetail.relatedEyebrow}</p>
         <h2>{t.productDetail.relatedTitle}</h2>
       </div>
-      <ProductGrid products={related} language={language} ctaLabel={t.categoryPage.viewProduct} />
+      <ProductGrid
+        products={related}
+        language={language}
+        viewLabel={t.productsPage.viewDetails}
+        quoteLabel={t.productsPage.getQuote}
+      />
     </section>
   );
 }
