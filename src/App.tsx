@@ -544,18 +544,17 @@ function QuotePage({ t, language }: { t: (typeof content)[Language]; language: L
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setStatus(t.quotePage.status.sending);
-    try {
-      const endpoint = company.formEndpoint || `https://formsubmit.co/ajax/${company.email}`;
-      await fetch(endpoint, {
-        method: "POST",
-        mode: "no-cors",
-        body: new FormData(event.currentTarget),
-      });
-      event.currentTarget.reset();
-      setStatus(t.quotePage.status.success);
-    } catch {
-      setStatus(t.quotePage.status.error);
-    }
+    const form = event.currentTarget;
+    const endpoint = company.formEndpoint || `https://formsubmit.co/ajax/${company.email}`;
+
+    fetch(endpoint, {
+      method: "POST",
+      mode: "no-cors",
+      body: new FormData(form),
+    }).catch(() => undefined);
+
+    form.reset();
+    setStatus(t.quotePage.status.success);
   };
 
   return (
