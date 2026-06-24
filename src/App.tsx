@@ -18,6 +18,19 @@ const routeFromHash = () => {
 
 const toHash = (path: string) => `#${path}`;
 
+const isProductCatalogRoute = (route: string) => /^\/products(?:\/[^/]+)?$/.test(route);
+
+const scrollForRoute = (route: string) => {
+  if (isProductCatalogRoute(route)) {
+    window.setTimeout(() => {
+      document.getElementById("product-catalog")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 0);
+    return;
+  }
+
+  window.scrollTo({ top: 0, behavior: "smooth" });
+};
+
 const quotePath = (product?: ProductItem) => {
   if (!product) {
     return toHash("/quote");
@@ -49,9 +62,10 @@ function App() {
 
   useEffect(() => {
     const onHashChange = () => {
-      setRoute(routeFromHash());
+      const nextRoute = routeFromHash();
+      setRoute(nextRoute);
       setMenuOpen(false);
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      scrollForRoute(nextRoute);
     };
 
     window.addEventListener("hashchange", onHashChange);
@@ -284,7 +298,7 @@ function ProductsPage({
   return (
     <>
       <PageHero eyebrow={t.productsPage.eyebrow} title={t.productsPage.title} text={t.productsPage.text} />
-      <section className="section">
+      <section className="section" id="product-catalog">
         <ProductCatalog selectedCategory={selectedCategory} t={t} language={language} />
       </section>
       <CallToAction t={t} />
