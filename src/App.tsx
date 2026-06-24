@@ -551,13 +551,11 @@ function QuotePage({ t, language }: { t: (typeof content)[Language]; language: L
     event.preventDefault();
     setStatus(t.quotePage.status.sending);
     try {
-      const response = await fetch(company.formEndpoint, {
+      await fetch(company.formEndpoint, {
         method: "POST",
+        mode: "no-cors",
         body: new FormData(event.currentTarget),
       });
-      if (!response.ok) {
-        throw new Error("Form service returned an error.");
-      }
       event.currentTarget.reset();
       setStatus(t.quotePage.status.success);
     } catch {
