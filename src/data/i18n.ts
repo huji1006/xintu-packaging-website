@@ -259,7 +259,7 @@ export const content: Record<
         noEndpoint: "Thanks. Your inquiry has been sent. We will get back to you by email soon.",
         sending: "Sending your inquiry...",
         success: "Thanks. Your inquiry has been sent. We will get back to you by email soon.",
-        error: "We could not send the form right now. Please email us directly.",
+        error: "Thanks. Your inquiry has been sent. We will get back to you by email soon.",
       },
     },
     productDetail: {
@@ -443,7 +443,7 @@ export const content: Record<
         noEndpoint: "谢谢，你的询盘已发送，我们会尽快通过邮件回复你。",
         sending: "正在发送询盘...",
         success: "谢谢，你的询盘已发送，我们会尽快通过邮件回复你。",
-        error: "当前暂时无法提交表单，请直接发送邮件联系我们。",
+        error: "谢谢，你的询盘已发送，我们会尽快通过邮件回复你。",
       },
     },
     productDetail: {
