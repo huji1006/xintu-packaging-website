@@ -203,12 +203,14 @@ dd {
 }
 
 .hero {
-  display: grid;
-  grid-template-columns: minmax(0, 0.76fr) minmax(480px, 1.24fr);
-  gap: clamp(18px, 3.6vw, 48px);
-  align-items: start;
-  min-height: auto;
-  padding: clamp(18px, 3.2vw, 38px) clamp(18px, 5vw, 80px) clamp(34px, 5vw, 64px);
+  display: flex;
+  align-items: center;
+  min-height: calc(100vh - 74px);
+  padding: clamp(34px, 5.4vw, 72px) clamp(18px, 5vw, 80px);
+  background-image: url("/assets/hero-product-showcase.webp?v=20260625-bg");
+  background-repeat: no-repeat;
+  background-position: center right;
+  background-size: cover;
 }
 
 .hero > *,
@@ -230,13 +232,18 @@ dd {
   margin: 0 auto;
 }
 
+.hero-copy {
+  width: min(48vw, 660px);
+  margin: 0;
+}
+
 .hero h1,
 .page-hero h1 {
   margin: 0;
-  max-width: 690px;
+  max-width: 640px;
   color: var(--ink);
-  font-size: clamp(44px, 5.9vw, 78px);
-  line-height: 0.96;
+  font-size: clamp(42px, 5.4vw, 74px);
+  line-height: 0.98;
   font-weight: 760;
 }
 
@@ -298,22 +305,6 @@ dd {
   color: var(--blue-dark);
   border-color: var(--line);
   background: #ffffff;
-}
-
-.hero-visual {
-  justify-self: end;
-  width: min(112%, 1060px);
-  border-radius: 8px;
-  background: transparent;
-}
-
-.hero-visual img {
-  display: block;
-  width: 100%;
-  height: auto;
-  min-height: 0;
-  border-radius: 8px;
-  object-fit: contain;
 }
 
 .section {
@@ -1155,20 +1146,14 @@ dd {
 
   .hero {
     min-height: auto;
-    gap: 22px;
-    padding-top: 18px;
+    padding-top: clamp(300px, 48vw, 440px);
+    background-image: linear-gradient(180deg, rgba(255, 255, 255, 0) 0 42%, #ffffff 64%), url("/assets/hero-product-showcase.webp?v=20260625-bg");
+    background-position: top center;
+    background-size: min(1180px, 150vw) auto;
   }
 
-  .hero-visual {
-    order: -1;
-    justify-self: stretch;
-    width: 100%;
-  }
-
-  .hero-visual img {
-    aspect-ratio: 10 / 7;
-    min-height: 0;
-    object-fit: cover;
+  .hero-copy {
+    width: min(100%, 660px);
   }
 
   .category-grid,
@@ -1277,14 +1262,9 @@ dd {
     padding-right: 20px;
   }
 
-  .hero-visual,
   .product-hero img {
     width: 100%;
     overflow: hidden;
-  }
-
-  .hero-visual img {
-    min-height: 0;
   }
 
   .product-card > div,

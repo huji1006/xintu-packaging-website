@@ -207,7 +207,7 @@ function Header({
 function HomePage({ t, language }: { t: (typeof content)[Language]; language: Language }) {
   return (
     <>
-      <section className="hero">
+      <section className="hero" aria-label={t.home.heroImageAlt}>
         <div className="hero-copy">
           <p className="eyebrow">{t.home.hero.eyebrow}</p>
           <h1>{t.home.hero.title}</h1>
@@ -220,16 +220,6 @@ function HomePage({ t, language }: { t: (typeof content)[Language]; language: La
               {t.home.secondaryCta}
             </a>
           </div>
-        </div>
-        <div className="hero-visual" aria-label={t.home.heroImageAlt}>
-          <img
-            src="./assets/hero-product-showcase.webp?v=20260625-hero"
-            alt={t.home.heroImageAlt}
-            width="1500"
-            height="1050"
-            loading="eager"
-            fetchPriority="high"
-          />
         </div>
       </section>
 
