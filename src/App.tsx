@@ -222,7 +222,14 @@ function HomePage({ t, language }: { t: (typeof content)[Language]; language: La
           </div>
         </div>
         <div className="hero-visual" aria-label={t.home.heroImageAlt}>
-          <img src="./assets/hero-packaging.svg" alt={t.home.heroImageAlt} />
+          <img
+            src="./assets/hero-product-showcase.webp?v=20260625-hero"
+            alt={t.home.heroImageAlt}
+            width="1500"
+            height="1050"
+            loading="eager"
+            fetchPriority="high"
+          />
         </div>
       </section>
 

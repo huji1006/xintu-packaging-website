@@ -204,11 +204,11 @@ dd {
 
 .hero {
   display: grid;
-  grid-template-columns: minmax(0, 1.02fr) minmax(320px, 0.98fr);
-  gap: clamp(28px, 5vw, 70px);
+  grid-template-columns: minmax(0, 0.92fr) minmax(360px, 1.08fr);
+  gap: clamp(24px, 4.5vw, 62px);
   align-items: center;
-  min-height: calc(100vh - 74px);
-  padding: clamp(44px, 8vw, 96px) clamp(18px, 5vw, 80px) clamp(34px, 6vw, 76px);
+  min-height: auto;
+  padding: clamp(24px, 4.2vw, 54px) clamp(18px, 5vw, 80px) clamp(34px, 5vw, 64px);
 }
 
 .hero > *,
@@ -302,14 +302,16 @@ dd {
 
 .hero-visual {
   border-radius: 8px;
-  background: linear-gradient(180deg, #f5fbff, #eef7f2);
-  box-shadow: var(--shadow);
+  background: transparent;
 }
 
 .hero-visual img {
+  display: block;
   width: 100%;
-  min-height: 360px;
-  object-fit: cover;
+  height: auto;
+  min-height: 0;
+  border-radius: 8px;
+  object-fit: contain;
 }
 
 .section {
@@ -1151,11 +1153,18 @@ dd {
 
   .hero {
     min-height: auto;
-    padding-top: 44px;
+    gap: 22px;
+    padding-top: 18px;
+  }
+
+  .hero-visual {
+    order: -1;
   }
 
   .hero-visual img {
-    min-height: 260px;
+    aspect-ratio: 10 / 7;
+    min-height: 0;
+    object-fit: cover;
   }
 
   .category-grid,
@@ -1271,7 +1280,7 @@ dd {
   }
 
   .hero-visual img {
-    min-height: 240px;
+    min-height: 0;
   }
 
   .product-card > div,
