@@ -36,9 +36,42 @@ export type ProductCategory = {
 
 const imagePlaceholder = "./assets/product-image-placeholder.svg";
 const responsiveWidths = [480, 900, 1400];
-const productImageVersion = "20260623-2";
+const productImageVersion = "20260625-1";
 
 const text = (en: string, zh: string): LocalizedText => ({ en, zh });
+
+const commonSceneFiles = [
+  "01-hero-scene.png",
+  "02-application-scene.png",
+  "03-b2b-display-scene.png",
+  "04-material-closeup.png",
+  "05-color-size-assortment.png",
+  "06-industry-use-scene.png",
+  "07-premium-lifestyle-scene.png",
+  "08-wholesale-supplier-scene.png",
+];
+
+const aluminumBubbleMailerFiles = [
+  "01-hero-scene.png",
+  "02-packing-desk-scene.png",
+  "03-b2b-display-scene.png",
+  "04-material-closeup.png",
+  "05-color-size-assortment.png",
+  "06-electronics-shipping-scene.png",
+  "07-cosmetics-boutique-scene.png",
+  "08-wholesale-supplier-scene.png",
+];
+
+const tissuePaperFiles = [
+  "01-hero-scene.png",
+  "02-application-scene.png",
+  "03-material-closeup.png",
+  "04-color-size-assortment.png",
+  "05-wholesale-supplier-scene.png",
+];
+
+const productImages = (parentSlug: string, productSlug: string, files = commonSceneFiles) =>
+  files.map((file) => `./assets/products/${parentSlug}/${productSlug}/${file}`);
 
 const optimizedImage = (src: string) => {
   const base = src.replace(/\.png$/i, "");
@@ -52,76 +85,33 @@ const optimizedImage = (src: string) => {
 };
 
 const productImageSources: Record<string, string[]> = {
-  "bubble-mailer/aluminum-bubble-mailer": [
-    "01-hero-scene.png",
-    "02-packing-desk-scene.png",
-    "03-b2b-display-scene.png",
-    "04-material-closeup.png",
-    "05-color-size-assortment.png",
-    "06-electronics-shipping-scene.png",
-    "07-cosmetics-boutique-scene.png",
-    "08-wholesale-supplier-scene.png",
-  ].map((file) => `./assets/products/bubble-mailer/aluminum-bubble-mailer/${file}`),
-  "bubble-mailer/biodegradable-bubble-mailer": [
-    "01-hero-scene.png",
-    "02-application-scene.png",
-    "03-b2b-display-scene.png",
-    "04-material-closeup.png",
-    "05-color-size-assortment.png",
-    "06-industry-use-scene.png",
-    "07-premium-lifestyle-scene.png",
-    "08-wholesale-supplier-scene.png",
-  ].map((file) => `./assets/products/bubble-mailer/biodegradable-bubble-mailer/${file}`),
-  "bubble-mailer/co-extruded-bubble-mailer": [
-    "01-hero-scene.png",
-    "02-application-scene.png",
-    "03-b2b-display-scene.png",
-    "04-material-closeup.png",
-    "05-color-size-assortment.png",
-    "06-industry-use-scene.png",
-    "07-premium-lifestyle-scene.png",
-    "08-wholesale-supplier-scene.png",
-  ].map((file) => `./assets/products/bubble-mailer/co-extruded-bubble-mailer/${file}`),
-  "bubble-mailer/kraft-paper-bubble-mailer": [
-    "01-hero-scene.png",
-    "02-application-scene.png",
-    "03-b2b-display-scene.png",
-    "04-material-closeup.png",
-    "05-color-size-assortment.png",
-    "06-industry-use-scene.png",
-    "07-premium-lifestyle-scene.png",
-    "08-wholesale-supplier-scene.png",
-  ].map((file) => `./assets/products/bubble-mailer/kraft-paper-bubble-mailer/${file}`),
-  "bubble-mailer/pearlescent-bubble-mailer": [
-    "01-hero-scene.png",
-    "02-application-scene.png",
-    "03-b2b-display-scene.png",
-    "04-material-closeup.png",
-    "05-color-size-assortment.png",
-    "06-industry-use-scene.png",
-    "07-premium-lifestyle-scene.png",
-    "08-wholesale-supplier-scene.png",
-  ].map((file) => `./assets/products/bubble-mailer/pearlescent-bubble-mailer/${file}`),
-  "bubble-mailer/poly-bubble-mailer": [
-    "01-hero-scene.png",
-    "02-application-scene.png",
-    "03-b2b-display-scene.png",
-    "04-material-closeup.png",
-    "05-color-size-assortment.png",
-    "06-industry-use-scene.png",
-    "07-premium-lifestyle-scene.png",
-    "08-wholesale-supplier-scene.png",
-  ].map((file) => `./assets/products/bubble-mailer/poly-bubble-mailer/${file}`),
-  "mailing-bag/biodegradable-mailing-bag": [
-    "01-hero-scene.png",
-    "02-application-scene.png",
-    "03-b2b-display-scene.png",
-    "04-material-closeup.png",
-    "05-color-size-assortment.png",
-    "06-industry-use-scene.png",
-    "07-premium-lifestyle-scene.png",
-    "08-wholesale-supplier-scene.png",
-  ].map((file) => `./assets/products/mailing-bag/biodegradable-mailing-bag/${file}`),
+  "mailing-bag/poly-mailing-bag": productImages("mailing-bag", "poly-mailing-bag"),
+  "mailing-bag/biodegradable-mailing-bag": productImages("mailing-bag", "biodegradable-mailing-bag"),
+  "mailing-bag/die-cut-handle-mailing-bag": productImages("mailing-bag", "die-cut-handle-mailing-bag"),
+  "mailing-bag/double-seal-mailing-bag": productImages("mailing-bag", "double-seal-mailing-bag"),
+  "mailing-bag/recycled-mailing-bag": productImages("mailing-bag", "recycled-mailing-bag"),
+  "mailing-bag/pre-open-bag": productImages("mailing-bag", "pre-open-bag"),
+  "mailing-bag/paper-envelope": productImages("mailing-bag", "paper-envelope"),
+  "bubble-mailer/poly-bubble-mailer": productImages("bubble-mailer", "poly-bubble-mailer"),
+  "bubble-mailer/co-extruded-bubble-mailer": productImages("bubble-mailer", "co-extruded-bubble-mailer"),
+  "bubble-mailer/kraft-paper-bubble-mailer": productImages("bubble-mailer", "kraft-paper-bubble-mailer"),
+  "bubble-mailer/pearlescent-bubble-mailer": productImages("bubble-mailer", "pearlescent-bubble-mailer"),
+  "bubble-mailer/biodegradable-bubble-mailer": productImages("bubble-mailer", "biodegradable-bubble-mailer"),
+  "bubble-mailer/aluminum-bubble-mailer": productImages(
+    "bubble-mailer",
+    "aluminum-bubble-mailer",
+    aluminumBubbleMailerFiles,
+  ),
+  "zipper-bag/zipper-bag": productImages("zipper-bag", "zipper-bag"),
+  "self-seal-bag/self-seal-bag": productImages("self-seal-bag", "self-seal-bag"),
+  "paper-bag/gift-paper-bag": productImages("paper-bag", "gift-paper-bag"),
+  "paper-bag/kraft-paper-bag": productImages("paper-bag", "kraft-paper-bag"),
+  "paper-bag/art-paper-bag": productImages("paper-bag", "art-paper-bag"),
+  "paper-bag/glassine-paper-bag": productImages("paper-bag", "glassine-paper-bag"),
+  "plastic-packaging-bag/loop-handle-bag": productImages("plastic-packaging-bag", "loop-handle-bag"),
+  "plastic-packaging-bag/die-cut-bag": productImages("plastic-packaging-bag", "die-cut-bag"),
+  "stand-up-pouch/stand-up-pouch": productImages("stand-up-pouch", "stand-up-pouch"),
+  "tissue-paper/tissue-paper": productImages("tissue-paper", "tissue-paper", tissuePaperFiles),
 };
 
 const productText = (name: LocalizedText) => ({
