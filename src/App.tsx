@@ -1,4 +1,4 @@
-import { FormEvent, useEffect, useMemo, useState } from "react";
+import { FormEvent, useEffect, useMemo, useRef, useState } from "react";
 import { company, content, type Language } from "./data/i18n";
 import {
   allProducts,
@@ -11,9 +11,18 @@ import {
   type ProductItem,
 } from "./data/catalog";
 
+const normalizeRoute = (route: string) => {
+  if (!route || route === "/") {
+    return "/";
+  }
+
+  const withoutTrailingSlash = route.replace(/\/+$/, "");
+  return withoutTrailingSlash.startsWith("/") ? withoutTrailingSlash : `/${withoutTrailingSlash}`;
+};
+
 const routeFromHash = () => {
   const raw = window.location.hash.replace(/^#/, "").split("?")[0];
-  return raw || "/";
+  return normalizeRoute(raw || "/");
 };
 
 const toHash = (path: string) => `#${path}`;
@@ -54,11 +63,116 @@ const getInitialLanguage = (): Language => {
   return window.localStorage.getItem("xintu-language") === "zh" ? "zh" : "en";
 };
 
+const pageUrl = (route: string) => `https://${company.domain}/${route === "/" ? "" : `#${route}`}`;
+
+const setMeta = (name: string, value: string, property = false) => {
+  const selector = property ? `meta[property="${name}"]` : `meta[name="${name}"]`;
+  let meta = document.head.querySelector<HTMLMetaElement>(selector);
+
+  if (!meta) {
+    meta = document.createElement("meta");
+    meta.setAttribute(property ? "property" : "name", name);
+    document.head.appendChild(meta);
+  }
+
+  meta.content = value;
+};
+
+const setCanonical = (url: string) => {
+  let canonical = document.head.querySelector<HTMLLinkElement>('link[rel="canonical"]');
+
+  if (!canonical) {
+    canonical = document.createElement("link");
+    canonical.rel = "canonical";
+    document.head.appendChild(canonical);
+  }
+
+  canonical.href = url;
+};
+
+const setJsonLd = (data: unknown) => {
+  const id = "route-jsonld";
+  let script = document.getElementById(id) as HTMLScriptElement | null;
+
+  if (!script) {
+    script = document.createElement("script");
+    script.id = id;
+    script.type = "application/ld+json";
+    document.head.appendChild(script);
+  }
+
+  script.textContent = JSON.stringify(data);
+};
+
+const routeMeta = (
+  route: string,
+  language: Language,
+  t: (typeof content)[Language],
+  category?: ProductCategory,
+  product?: ProductItem,
+) => {
+  const suffix = "Xintu Packaging Solutions";
+
+  if (product) {
+    return {
+      title: `${label(product.name, language)} | ${suffix}`,
+      description: label(product.description, language),
+    };
+  }
+
+  if (category) {
+    return {
+      title: `${label(category.name, language)} | Custom Packaging Sourcing | ${suffix}`,
+      description: label(category.summary, language),
+    };
+  }
+
+  if (route === "/products") {
+    return {
+      title: `${t.productsPage.title} | ${suffix}`,
+      description: t.productsPage.text,
+    };
+  }
+
+  if (route === "/about") {
+    return {
+      title: `${t.aboutPage.title} | ${suffix}`,
+      description: t.aboutPage.text,
+    };
+  }
+
+  if (route === "/quote") {
+    return {
+      title: `${t.quotePage.title} | ${suffix}`,
+      description: t.quotePage.text,
+    };
+  }
+
+  return {
+    title: `${t.home.hero.title} | ${suffix}`,
+    description: t.home.hero.text,
+  };
+};
+
 function App() {
   const [route, setRoute] = useState(routeFromHash());
   const [menuOpen, setMenuOpen] = useState(false);
   const [language, setLanguage] = useState<Language>(getInitialLanguage);
+  const mainRef = useRef<HTMLElement>(null);
   const t = content[language];
+  const routeParts = useMemo(() => route.split("/").filter(Boolean), [route]);
+  const activeCategory = routeParts[0] === "products" && routeParts[1] ? findCategory(routeParts[1]) : undefined;
+  const activeProduct =
+    routeParts[0] === "products" && routeParts[1] && routeParts[2]
+      ? findProduct(routeParts[1], routeParts[2])
+      : undefined;
+  const isKnownRoute =
+    route === "/" ||
+    route === "/products" ||
+    route === "/about" ||
+    route === "/quote" ||
+    (routeParts[0] === "products" && routeParts.length === 2 && Boolean(activeCategory)) ||
+    (routeParts[0] === "products" && routeParts.length === 3 && Boolean(activeProduct));
 
   useEffect(() => {
     const onHashChange = () => {
@@ -80,15 +194,70 @@ function App() {
     window.localStorage.setItem("xintu-language", language);
   }, [language, t.locale]);
 
-  const routeParts = useMemo(() => route.split("/").filter(Boolean), [route]);
-  const activeCategory = routeParts[0] === "products" && routeParts[1] ? findCategory(routeParts[1]) : undefined;
-  const activeProduct =
-    routeParts[0] === "products" && routeParts[1] && routeParts[2]
-      ? findProduct(routeParts[1], routeParts[2])
-      : undefined;
+  useEffect(() => {
+    const meta = routeMeta(route, language, t, activeCategory, activeProduct);
+    const url = pageUrl(route);
+
+    document.title = meta.title;
+    setMeta("description", meta.description);
+    setMeta("og:title", meta.title, true);
+    setMeta("og:description", meta.description, true);
+    setMeta("og:url", url, true);
+    setMeta("og:type", activeProduct ? "product" : "website", true);
+    setMeta("twitter:card", "summary_large_image");
+    setCanonical(url);
+    setJsonLd([
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        name: company.brandName,
+        legalName: company.legalNameEn,
+        url: `https://${company.domain}/`,
+        email: company.email,
+        address: {
+          "@type": "PostalAddress",
+          addressLocality: company.locationEn,
+          addressCountry: "CN",
+        },
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Home",
+            item: `https://${company.domain}/`,
+          },
+          ...(route === "/"
+            ? []
+            : [
+                {
+                  "@type": "ListItem",
+                  position: 2,
+                  name: activeProduct
+                    ? label(activeProduct.name, language)
+                    : activeCategory
+                      ? label(activeCategory.name, language)
+                      : meta.title.replace(` | ${company.brandName}`, ""),
+                  item: url,
+                },
+              ]),
+        ],
+      },
+    ]);
+  }, [activeCategory, activeProduct, language, route, t]);
+
+  useEffect(() => {
+    mainRef.current?.focus({ preventScroll: true });
+  }, [route]);
 
   return (
     <div>
+      <a className="skip-link" href="#main-content">
+        {t.skipLink}
+      </a>
       <Header
         route={route}
         menuOpen={menuOpen}
@@ -97,7 +266,7 @@ function App() {
         setLanguage={setLanguage}
         t={t}
       />
-      <main>
+      <main id="main-content" ref={mainRef} tabIndex={-1}>
         {route === "/" && <HomePage t={t} language={language} />}
         {route === "/products" && <ProductsPage t={t} language={language} />}
         {route === "/about" && <AboutPage t={t} />}
@@ -105,11 +274,10 @@ function App() {
         {routeParts[0] === "products" && routeParts.length === 2 && activeCategory && (
           <ProductsPage selectedCategory={activeCategory} t={t} language={language} />
         )}
-        {routeParts[0] === "products" && routeParts.length === 2 && !activeCategory && <NotFoundPage t={t} />}
         {routeParts[0] === "products" && routeParts.length === 3 && activeProduct && (
           <ProductPage product={activeProduct} category={activeCategory} t={t} language={language} />
         )}
-        {routeParts[0] === "products" && routeParts.length === 3 && !activeProduct && <NotFoundPage t={t} />}
+        {!isKnownRoute && <NotFoundPage t={t} />}
       </main>
       <Footer t={t} language={language} />
     </div>
@@ -133,6 +301,7 @@ function Header({
 }) {
   const [languageOpen, setLanguageOpen] = useState(false);
   const currentLanguageLabel = language === "en" ? "English" : "中文";
+  const isActiveNav = (path: string) => route === path || (path === "/products" && route.startsWith("/products/"));
 
   const chooseLanguage = (nextLanguage: Language) => {
     setLanguage(nextLanguage);
@@ -157,7 +326,7 @@ function Header({
       </button>
       <nav className={menuOpen ? "nav nav-open" : "nav"} aria-label="Main navigation">
         {t.nav.map((item) => (
-          <a key={item.path} className={route === item.path ? "active" : ""} href={toHash(item.path)}>
+          <a key={item.path} className={isActiveNav(item.path) ? "active" : ""} href={toHash(item.path)}>
             {item.label}
           </a>
         ))}
@@ -178,11 +347,10 @@ function Header({
             <span>{currentLanguageLabel}</span>
             <span className="chevron" aria-hidden="true" />
           </button>
-          <div className="language-options" role="menu">
+          <div className="language-options">
             <button
               className={language === "en" ? "selected" : ""}
               type="button"
-              role="menuitem"
               onClick={() => chooseLanguage("en")}
             >
               <span>English</span>
@@ -191,7 +359,6 @@ function Header({
             <button
               className={language === "zh" ? "selected" : ""}
               type="button"
-              role="menuitem"
               onClick={() => chooseLanguage("zh")}
             >
               <span>中文</span>
@@ -207,7 +374,7 @@ function Header({
 function HomePage({ t, language }: { t: (typeof content)[Language]; language: Language }) {
   return (
     <>
-      <section className="hero" aria-label={t.home.heroImageAlt}>
+      <section className="hero">
         <div className="hero-copy">
           <p className="eyebrow">{t.home.hero.eyebrow}</p>
           <h1>{t.home.hero.title}</h1>
@@ -220,6 +387,22 @@ function HomePage({ t, language }: { t: (typeof content)[Language]; language: La
               {t.home.secondaryCta}
             </a>
           </div>
+          <div className="hero-badges" aria-label={t.home.badgeLabel}>
+            {t.home.heroBadges.map((badge) => (
+              <span key={badge}>{badge}</span>
+            ))}
+          </div>
+        </div>
+        <div className="hero-media">
+          <img
+            src="./assets/hero-product-showcase.webp?v=20260625-calm"
+            alt={t.home.heroImageAlt}
+            width="2000"
+            height="1127"
+            loading="eager"
+            decoding="async"
+            fetchPriority="high"
+          />
         </div>
       </section>
 
@@ -475,10 +658,11 @@ function ProductImageTile({
               type="button"
               onClick={() => setSelectedImage(image)}
               aria-label={label(image.alt, language)}
+              aria-pressed={image.src === selectedImage.src}
             >
               <ResponsiveProductImage
                 image={image}
-                alt={label(image.alt, language)}
+                alt=""
                 sizes="96px"
               />
             </button>
@@ -532,6 +716,8 @@ function AboutPage({ t }: { t: (typeof content)[Language] }) {
 
 function QuotePage({ t, language }: { t: (typeof content)[Language]; language: Language }) {
   const [status, setStatus] = useState("");
+  const [statusType, setStatusType] = useState<"neutral" | "success" | "error">("neutral");
+  const [submitting, setSubmitting] = useState(false);
   const selectedProductValue = useMemo(getQuoteProductFromHash, []);
 
   useEffect(() => {
@@ -540,28 +726,52 @@ function QuotePage({ t, language }: { t: (typeof content)[Language]; language: L
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    if (submitting) {
+      return;
+    }
+
     setStatus(t.quotePage.status.sending);
+    setStatusType("neutral");
+    setSubmitting(true);
     const form = event.currentTarget;
     const endpoint = company.formEndpoint || `https://formsubmit.co/ajax/${company.email}`;
 
-    fetch(endpoint, {
-      method: "POST",
-      mode: "no-cors",
-      body: new FormData(form),
-    }).catch(() => undefined);
+    try {
+      const response = await fetch(endpoint, {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+        },
+        body: new FormData(form),
+      });
 
-    form.reset();
-    setStatus(t.quotePage.status.success);
+      if (!response.ok) {
+        throw new Error(`Inquiry failed with ${response.status}`);
+      }
+
+      form.reset();
+      setStatus(t.quotePage.status.success);
+      setStatusType("success");
+    } catch {
+      setStatus(t.quotePage.status.error);
+      setStatusType("error");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
     <>
       <PageHero eyebrow={t.quotePage.eyebrow} title={t.quotePage.title} text={t.quotePage.text} />
       <section className="section quote-layout">
-        <form className="quote-form" onSubmit={handleSubmit}>
+        <form className="quote-form" onSubmit={handleSubmit} aria-busy={submitting}>
           <input type="hidden" name="_subject" value="New inquiry from xintutrade.com" />
           <input type="hidden" name="_template" value="table" />
           <input type="hidden" name="_captcha" value="false" />
+          <label className="honeypot" aria-hidden="true">
+            Company website
+            <input name="_honey" tabIndex={-1} autoComplete="off" />
+          </label>
           <label>
             {t.quotePage.fields.name}
             <input name="name" required autoComplete="name" />
@@ -625,16 +835,27 @@ function QuotePage({ t, language }: { t: (typeof content)[Language]; language: L
           </label>
           <label>
             {t.quotePage.fields.upload}
-            <input name="designFile" type="file" />
+            <input
+              name="designFile"
+              type="file"
+              accept=".pdf,.jpg,.jpeg,.png,.webp,.ai,.eps,.svg,.zip"
+              aria-describedby="file-help"
+            />
+            <small id="file-help">{t.quotePage.fields.uploadHelp}</small>
           </label>
           <label className="full">
             {t.quotePage.fields.message}
             <textarea name="message" rows={6} placeholder={t.quotePage.fields.messagePlaceholder} />
           </label>
-          <button className="button primary full" type="submit">
-            {t.quotePage.fields.submit}
+          <p className="quote-privacy full">{t.quotePage.privacyNote}</p>
+          <button className="button primary full" type="submit" disabled={submitting}>
+            {submitting ? t.quotePage.fields.submitting : t.quotePage.fields.submit}
           </button>
-          {status && <p className="form-status">{status}</p>}
+          {status && (
+            <p className={`form-status ${statusType}`} role="status" aria-live="polite">
+              {status}
+            </p>
+          )}
         </form>
         <aside className="quote-side">
           <h2>{t.quotePage.detailsTitle}</h2>
@@ -885,11 +1106,13 @@ function RelatedProducts({
 function Breadcrumb({ items }: { items: Array<{ label: string; path?: string }> }) {
   return (
     <nav className="breadcrumb" aria-label="Breadcrumb">
-      {items.map((item, index) => (
-        <span key={`${item.label}-${index}`}>
-          {item.path ? <a href={toHash(item.path)}>{item.label}</a> : item.label}
-        </span>
-      ))}
+      <ol>
+        {items.map((item, index) => (
+          <li key={`${item.label}-${index}`}>
+            {item.path ? <a href={toHash(item.path)}>{item.label}</a> : <span aria-current="page">{item.label}</span>}
+          </li>
+        ))}
+      </ol>
     </nav>
   );
 }

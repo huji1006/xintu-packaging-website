@@ -23,7 +23,7 @@ export const company = {
   locationEn: "Guangzhou, China",
   locationZh: "中国广州",
   email: "judy@xintutrade.com",
-  whatsapp: "+86 000 0000 0000",
+  whatsapp: "",
   formEndpoint: "https://formsubmit.co/ajax/judy@xintutrade.com",
 };
 
@@ -31,6 +31,7 @@ export const content: Record<
   Language,
   {
     locale: string;
+    skipLink: string;
     nav: NavItem[];
     language: {
       label: string;
@@ -42,6 +43,8 @@ export const content: Record<
       primaryCta: string;
       secondaryCta: string;
       heroImageAlt: string;
+      badgeLabel: string;
+      heroBadges: string[];
       productsEyebrow: string;
       productsTitle: string;
       productsText: string;
@@ -104,10 +107,13 @@ export const content: Record<
         sampleNo: string;
         sampleNotSure: string;
         upload: string;
+        uploadHelp: string;
         message: string;
         messagePlaceholder: string;
         submit: string;
+        submitting: string;
       };
+      privacyNote: string;
       status: {
         noEndpoint: string;
         sending: string;
@@ -146,6 +152,7 @@ export const content: Record<
 > = {
   en: {
     locale: "en",
+    skipLink: "Skip to main content",
     nav: [
       { label: "Home", path: "/" },
       { label: "Products", path: "/products" },
@@ -159,21 +166,23 @@ export const content: Record<
     },
     home: {
       hero: {
-        eyebrow: "Custom packaging sourcing from China",
-        title: "Custom packaging support for growing overseas brands.",
-        text: "We help eCommerce, food, beauty, apparel and product brands source custom packaging with practical follow-up from sample to shipment.",
+        eyebrow: "Low MOQ custom packaging sourcing from China",
+        title: "Custom packaging sourcing support for growing overseas brands.",
+        text: "We help eCommerce, food, beauty, apparel and product brands source custom paper bags, mailer bags, food pouches and packaging kits with practical follow-up from sample to shipment.",
       },
-      primaryCta: "Get a Quote",
+      primaryCta: "Get My Packaging Quote",
       secondaryCta: "View Products",
-      heroImageAlt: "Paper bags, mailer bags, pouches and boxes",
-      productsEyebrow: "Product categories",
-      productsTitle: "Packaging categories prepared for sourcing inquiries",
+      heroImageAlt: "Custom paper bags, mailer bags, stand-up pouches and brand packaging materials",
+      badgeLabel: "Sourcing support highlights",
+      heroBadges: ["Low MOQ support", "Sample support", "Pre-shipment photo or video check"],
+      productsEyebrow: "Sourcing categories",
+      productsTitle: "Custom packaging categories for low MOQ sourcing",
       productsText:
         "Explore practical packaging categories organized by main type and product structure.",
       whyEyebrow: "Why choose us",
-      whyTitle: "A sourcing partner for practical packaging follow-up.",
+      whyTitle: "A practical packaging sourcing partner for growing brands.",
       whyText:
-        "We focus on helping you compare workable packaging options, communicate details more clearly and follow up the production steps that are easy to miss when sourcing from far away.",
+        "We work as a practical sourcing partner instead of presenting ourselves as a manufacturer. We help overseas brands compare workable packaging options, coordinate samples and follow production details from China.",
       stepsEyebrow: "Service process",
       stepsTitle: "Simple support from idea to shipment check",
       customersEyebrow: "Best fit",
@@ -250,16 +259,20 @@ export const content: Record<
         sampleNo: "No",
         sampleNotSure: "Not sure",
         upload: "Upload Logo or Design",
+        uploadHelp: "Optional: PDF, JPG, PNG, AI, EPS, SVG or ZIP. You can also email larger files directly.",
         message: "Message",
         messagePlaceholder:
           "Tell us about your product, packaging idea, timeline or any reference style.",
         submit: "Submit Inquiry",
+        submitting: "Sending...",
       },
+      privacyNote:
+        "Your details and uploaded files are used only to understand your packaging request and follow up by email.",
       status: {
-        noEndpoint: "Thanks. Your inquiry has been sent. We will get back to you by email soon.",
+        noEndpoint: `Please email your inquiry directly to ${company.email}.`,
         sending: "Sending your inquiry...",
         success: "Thanks. Your inquiry has been sent. We will get back to you by email soon.",
-        error: "Thanks. Your inquiry has been sent. We will get back to you by email soon.",
+        error: `We could not confirm the form submission. Please retry or email us directly at ${company.email}.`,
       },
     },
     productDetail: {
@@ -332,6 +345,7 @@ export const content: Record<
   },
   zh: {
     locale: "zh-CN",
+    skipLink: "跳到主要内容",
     nav: [
       { label: "首页", path: "/" },
       { label: "产品", path: "/products" },
@@ -345,20 +359,22 @@ export const content: Record<
     },
     home: {
       hero: {
-        eyebrow: "中国定制包装采购支持",
+        eyebrow: "中国低起订量定制包装采购支持",
         title: "为海外成长型品牌提供定制包装采购支持。",
-        text: "我们帮助电商、食品、美妆、服装配饰和产品品牌，从中国采购定制包装，并协助从打样到出货前检查的沟通跟进。",
+        text: "我们帮助电商、食品、美妆、服装配饰和产品品牌，从中国采购定制纸袋、邮寄袋、食品包装袋和品牌包装套装，并协助从打样到出货前检查的沟通跟进。",
       },
-      primaryCta: "获取报价",
+      primaryCta: "获取包装报价",
       secondaryCta: "查看产品",
-      heroImageAlt: "纸袋、快递袋、包装袋和包装盒示意图",
-      productsEyebrow: "产品分类",
-      productsTitle: "已按两级分类整理的包装产品",
+      heroImageAlt: "定制纸袋、邮寄袋、自立袋和品牌包装材料",
+      badgeLabel: "采购支持重点",
+      heroBadges: ["低起订量沟通", "打样支持", "出货前图片或视频检查"],
+      productsEyebrow: "采购分类",
+      productsTitle: "适合低起订量采购沟通的定制包装分类",
       productsText: "按一级分类和具体产品结构展示常用包装，方便客户快速了解适合的方向。",
       whyEyebrow: "为什么选择我们",
-      whyTitle: "专注实际跟进的包装采购伙伴。",
+      whyTitle: "适合成长型品牌的务实包装采购伙伴。",
       whyText:
-        "我们重点帮助客户比较可行的包装方案，减少沟通误差，并跟进远程采购时容易遗漏的打样、生产和出货前检查环节。",
+        "我们以务实的采购伙伴身份协助客户，而不是把自己包装成制造商。我们帮助海外品牌比较可行包装方案、协调样品，并跟进中国供应链中的生产细节。",
       stepsEyebrow: "服务流程",
       stepsTitle: "从包装想法到出货检查的简单支持",
       customersEyebrow: "适合客户",
@@ -435,15 +451,18 @@ export const content: Record<
         sampleNo: "不需要",
         sampleNotSure: "暂不确定",
         upload: "上传 Logo 或设计文件",
+        uploadHelp: "可选：支持 PDF、JPG、PNG、AI、EPS、SVG 或 ZIP；较大的文件也可以直接发邮件。",
         message: "补充说明",
         messagePlaceholder: "请说明你的产品、包装想法、时间安排或参考风格。",
         submit: "提交询盘",
+        submitting: "正在发送...",
       },
+      privacyNote: "你填写的信息和上传文件只会用于理解包装需求，并通过邮件继续沟通报价和打样。",
       status: {
-        noEndpoint: "谢谢，你的询盘已发送，我们会尽快通过邮件回复你。",
+        noEndpoint: `请直接把询盘发送到邮箱 ${company.email}。`,
         sending: "正在发送询盘...",
         success: "谢谢，你的询盘已发送，我们会尽快通过邮件回复你。",
-        error: "谢谢，你的询盘已发送，我们会尽快通过邮件回复你。",
+        error: `当前无法确认表单是否提交成功，请重试，或直接发送邮件到 ${company.email}。`,
       },
     },
     productDetail: {

@@ -29,6 +29,37 @@ a {
   text-decoration: none;
 }
 
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[tabindex]:focus-visible {
+  outline: 3px solid rgba(23, 105, 170, 0.58);
+  outline-offset: 3px;
+}
+
+main:focus {
+  outline: none;
+}
+
+.skip-link {
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  z-index: 100;
+  transform: translateY(-150%);
+  padding: 10px 14px;
+  border-radius: 8px;
+  color: #ffffff;
+  background: var(--blue-dark);
+  font-weight: 800;
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
 img {
   display: block;
   max-width: 100%;
@@ -203,17 +234,13 @@ dd {
 }
 
 .hero {
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(360px, 0.58fr) minmax(420px, 1fr);
+  gap: clamp(28px, 4vw, 64px);
   align-items: center;
   min-height: calc(100vh - 74px);
   padding: clamp(34px, 5.4vw, 72px) clamp(18px, 5vw, 80px);
-  background-color: #ffffff;
-  background-image:
-    linear-gradient(90deg, #ffffff 0 42%, rgba(255, 255, 255, 0.92) 54%, rgba(255, 255, 255, 0.24) 70%, rgba(255, 255, 255, 0) 100%),
-    url("/assets/hero-product-showcase.webp?v=20260625-calm");
-  background-repeat: no-repeat;
-  background-position: center, right 4vw center;
-  background-size: 100% 100%, auto clamp(660px, 82vh, 860px);
+  background: #ffffff;
 }
 
 .hero > *,
@@ -236,8 +263,33 @@ dd {
 }
 
 .hero-copy {
-  width: min(42vw, 620px);
+  position: relative;
+  z-index: 1;
+  width: min(100%, 650px);
   margin: 0;
+}
+
+.hero-media {
+  position: relative;
+  min-width: 0;
+}
+
+.hero-media::before {
+  content: "";
+  position: absolute;
+  inset: 7% -4% -7% 10%;
+  border-radius: 8px;
+  background: linear-gradient(135deg, rgba(222, 244, 239, 0.8), rgba(231, 242, 250, 0.8));
+  filter: blur(26px);
+}
+
+.hero-media img {
+  position: relative;
+  width: 100%;
+  max-height: min(72vh, 760px);
+  object-fit: cover;
+  border-radius: 8px;
+  box-shadow: 0 24px 60px rgba(27, 52, 74, 0.12);
 }
 
 .hero h1,
@@ -282,6 +334,23 @@ dd {
   margin-top: 32px;
 }
 
+.hero-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 20px;
+}
+
+.hero-badges span {
+  padding: 8px 11px;
+  border: 1px solid #d7e7df;
+  border-radius: 999px;
+  color: #24624e;
+  background: #f5fbf8;
+  font-size: 13px;
+  font-weight: 800;
+}
+
 .button {
   display: inline-flex;
   align-items: center;
@@ -302,6 +371,11 @@ dd {
 
 .button.primary:hover {
   background: var(--blue-dark);
+}
+
+.button:disabled {
+  cursor: progress;
+  opacity: 0.68;
 }
 
 .button.secondary {
@@ -587,17 +661,23 @@ dd {
 }
 
 .breadcrumb {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  align-items: center;
   margin-bottom: 22px;
   color: var(--muted);
   font-size: 14px;
   font-weight: 700;
 }
 
-.breadcrumb span:not(:last-child)::after {
+.breadcrumb ol {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.breadcrumb li:not(:last-child)::after {
   content: "/";
   margin-left: 8px;
   color: #a5b4c1;
@@ -933,6 +1013,7 @@ dd {
 }
 
 .quote-form {
+  position: relative;
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 16px;
@@ -949,6 +1030,14 @@ dd {
   color: #243749;
   font-size: 14px;
   font-weight: 750;
+}
+
+.quote-form .honeypot {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
 }
 
 .quote-form input,
@@ -972,11 +1061,27 @@ dd {
   grid-column: 1 / -1;
 }
 
+.quote-form small,
+.quote-privacy {
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
 .form-status {
   grid-column: 1 / -1;
   margin: 0;
   color: var(--blue-dark);
   font-weight: 700;
+}
+
+.form-status.success {
+  color: #24624e;
+}
+
+.form-status.error {
+  color: #9a3412;
 }
 
 .quote-side h2 {
@@ -1149,12 +1254,15 @@ dd {
 
   .hero {
     min-height: auto;
-    padding-top: clamp(250px, 44vw, 370px);
-    background-image:
-      linear-gradient(180deg, rgba(255, 255, 255, 0) 0 38%, #ffffff 66%),
-      url("/assets/hero-product-showcase.webp?v=20260625-calm");
-    background-position: top center;
-    background-size: 100% 100%, min(980px, 145vw) auto;
+    padding-top: 26px;
+  }
+
+  .hero-media {
+    order: -1;
+  }
+
+  .hero-media img {
+    max-height: 430px;
   }
 
   .hero-copy {

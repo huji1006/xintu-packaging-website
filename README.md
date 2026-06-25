@@ -35,10 +35,10 @@ Update this file when editing English or Chinese copy, product categories, compa
 
 ## Inquiry form
 
-The current form endpoint is empty:
+The current form sends inquiries to:
 
 ```text
-company.formEndpoint
+judy@xintutrade.com
 ```
 
-After choosing a third-party form service, paste the form submission URL into that field.
+The endpoint is configured in `src/data/i18n.ts` as `company.formEndpoint`. Test the form with a real email inbox after every major form change, especially when checking file attachments.

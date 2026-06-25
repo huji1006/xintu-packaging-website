@@ -62,11 +62,29 @@ const aluminumBubbleMailerFiles = [
   "08-wholesale-supplier-scene.png",
 ];
 
+const recycledMailingBagFiles = [
+  "01-hero-scene.png",
+  "02-application-scene.png",
+  "03-b2b-display-scene.png",
+  "04-material-closeup.png",
+  "06-industry-use-scene.png",
+  "07-premium-lifestyle-scene.png",
+];
+
+const glassinePaperBagFiles = [
+  "02-application-scene.png",
+  "03-b2b-display-scene.png",
+  "04-material-closeup.png",
+  "05-color-size-assortment.png",
+  "06-industry-use-scene.png",
+  "07-premium-lifestyle-scene.png",
+  "08-wholesale-supplier-scene.png",
+];
+
 const tissuePaperFiles = [
   "01-hero-scene.png",
   "02-application-scene.png",
   "03-material-closeup.png",
-  "04-color-size-assortment.png",
   "05-wholesale-supplier-scene.png",
 ];
 
@@ -84,12 +102,42 @@ const optimizedImage = (src: string) => {
   };
 };
 
+const imageAlt = (name: LocalizedText, src: string, index: number) => {
+  const file = src.split("/").pop() ?? "";
+  const scene =
+    file.includes("hero")
+      ? text("main product display", "主产品展示")
+      : file.includes("application") || file.includes("packing-desk")
+        ? text("packing application scene", "包装应用场景")
+        : file.includes("b2b")
+          ? text("B2B product assortment", "B2B 产品组合展示")
+          : file.includes("material") || file.includes("closeup")
+            ? text("material and structure close-up", "材料和结构细节")
+            : file.includes("color") || file.includes("size")
+              ? text("color and size options", "颜色和尺寸选项")
+              : file.includes("electronics")
+                ? text("electronics shipping application", "电子产品寄送应用")
+                : file.includes("industry")
+                  ? text("industry use scene", "行业应用场景")
+                  : file.includes("premium") || file.includes("cosmetics")
+                    ? text("brand packaging scene", "品牌包装场景")
+                    : file.includes("wholesale")
+                      ? text("wholesale supply display", "批量供应展示")
+                      : text(`product reference ${index + 1}`, `产品参考图 ${index + 1}`);
+
+  return text(`${name.en} ${scene.en}`, `${name.zh}${scene.zh}`);
+};
+
 const productImageSources: Record<string, string[]> = {
   "mailing-bag/poly-mailing-bag": productImages("mailing-bag", "poly-mailing-bag"),
   "mailing-bag/biodegradable-mailing-bag": productImages("mailing-bag", "biodegradable-mailing-bag"),
   "mailing-bag/die-cut-handle-mailing-bag": productImages("mailing-bag", "die-cut-handle-mailing-bag"),
   "mailing-bag/double-seal-mailing-bag": productImages("mailing-bag", "double-seal-mailing-bag"),
-  "mailing-bag/recycled-mailing-bag": productImages("mailing-bag", "recycled-mailing-bag"),
+  "mailing-bag/recycled-mailing-bag": productImages(
+    "mailing-bag",
+    "recycled-mailing-bag",
+    recycledMailingBagFiles,
+  ),
   "mailing-bag/pocket-mailing-bag": productImages("mailing-bag", "pocket-mailing-bag"),
   "mailing-bag/pre-open-bag": productImages("mailing-bag", "pre-open-bag"),
   "mailing-bag/paper-envelope": productImages("mailing-bag", "paper-envelope"),
@@ -108,7 +156,7 @@ const productImageSources: Record<string, string[]> = {
   "paper-bag/gift-paper-bag": productImages("paper-bag", "gift-paper-bag"),
   "paper-bag/kraft-paper-bag": productImages("paper-bag", "kraft-paper-bag"),
   "paper-bag/art-paper-bag": productImages("paper-bag", "art-paper-bag"),
-  "paper-bag/glassine-paper-bag": productImages("paper-bag", "glassine-paper-bag"),
+  "paper-bag/glassine-paper-bag": productImages("paper-bag", "glassine-paper-bag", glassinePaperBagFiles),
   "plastic-packaging-bag/loop-handle-bag": productImages("plastic-packaging-bag", "loop-handle-bag"),
   "plastic-packaging-bag/die-cut-bag": productImages("plastic-packaging-bag", "die-cut-bag"),
   "stand-up-pouch/stand-up-pouch": productImages("stand-up-pouch", "stand-up-pouch"),
@@ -134,7 +182,7 @@ const gallery = (slug: string, name: LocalizedText, imageSourcesOrCount: string[
   if (Array.isArray(imageSourcesOrCount)) {
     return imageSourcesOrCount.map((src, index) => ({
       ...optimizedImage(src),
-      alt: text(`${name.en} image ${index + 1}`, `${name.zh}图片 ${index + 1}`),
+      alt: imageAlt(name, src, index),
     }));
   }
 
@@ -220,10 +268,10 @@ export const productCategories: ProductCategory[] = [
   },
   {
     slug: "self-seal-bag",
-    name: text("Self Seal Bag", "自密封袋"),
-    summary: text("Self-adhesive bags for fast packing and simple product protection.", "适合快速包装和基础防护的自粘封口袋。"),
+    name: text("Resealable Zip Bag", "可重复密封拉链袋"),
+    summary: text("Resealable clear bags for apparel, accessories, documents and retail product protection.", "适合服装、配饰、文件和零售产品保护的可重复密封透明袋。"),
     items: [
-      product("self-seal-bag", "self-seal-bag", "Self Seal Bag", "自密封袋", [text("Fast retail packing", "快速零售包装"), text("Document and accessory protection", "文件和配件保护")], [text("Peel-off adhesive", "撕条胶封"), text("Clear film", "透明膜"), text("Custom size", "定制尺寸")], 6),
+      product("self-seal-bag", "self-seal-bag", "Resealable Zip Bag", "可重复密封拉链袋", [text("Apparel inner packaging", "服装内包装"), text("Document and accessory protection", "文件和配件保护")], [text("Press-to-close zipper", "压合式拉链封口"), text("Clear or frosted film", "透明或磨砂膜"), text("Custom size", "定制尺寸")], 6),
     ],
   },
   {
