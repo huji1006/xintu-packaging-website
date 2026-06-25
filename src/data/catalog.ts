@@ -90,6 +90,7 @@ const productImageSources: Record<string, string[]> = {
   "mailing-bag/die-cut-handle-mailing-bag": productImages("mailing-bag", "die-cut-handle-mailing-bag"),
   "mailing-bag/double-seal-mailing-bag": productImages("mailing-bag", "double-seal-mailing-bag"),
   "mailing-bag/recycled-mailing-bag": productImages("mailing-bag", "recycled-mailing-bag"),
+  "mailing-bag/pocket-mailing-bag": productImages("mailing-bag", "pocket-mailing-bag"),
   "mailing-bag/pre-open-bag": productImages("mailing-bag", "pre-open-bag"),
   "mailing-bag/paper-envelope": productImages("mailing-bag", "paper-envelope"),
   "bubble-mailer/poly-bubble-mailer": productImages("bubble-mailer", "poly-bubble-mailer"),
