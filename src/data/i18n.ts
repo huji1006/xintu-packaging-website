@@ -166,9 +166,9 @@ export const content: Record<
     },
     home: {
       hero: {
-        eyebrow: "Low MOQ custom packaging sourcing from China",
-        title: "Custom packaging sourcing support for growing overseas brands.",
-        text: "We help eCommerce, food, beauty, apparel and product brands source custom paper bags, mailer bags, food pouches and packaging kits with practical follow-up from sample to shipment.",
+        eyebrow: "Packaging sourcing partner from China",
+        title: "Low MOQ custom packaging sourcing from China.",
+        text: "We help eCommerce, food, beauty and apparel brands source custom paper bags, mailer bags, pouches and packaging kits with practical follow-up from sample to shipment.",
       },
       primaryCta: "Get My Packaging Quote",
       secondaryCta: "View Products",

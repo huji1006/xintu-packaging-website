@@ -302,6 +302,16 @@ dd {
   font-weight: 760;
 }
 
+.hero-en h1 {
+  max-width: 560px;
+  font-size: clamp(42px, 4.35vw, 64px);
+  line-height: 1.02;
+}
+
+.hero-en .hero-text {
+  max-width: 560px;
+}
+
 .hero-text,
 .page-hero p,
 .section-heading p,

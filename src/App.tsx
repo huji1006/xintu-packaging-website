@@ -374,7 +374,7 @@ function Header({
 function HomePage({ t, language }: { t: (typeof content)[Language]; language: Language }) {
   return (
     <>
-      <section className="hero">
+      <section className={`hero hero-${language}`}>
         <div className="hero-copy">
           <p className="eyebrow">{t.home.hero.eyebrow}</p>
           <h1>{t.home.hero.title}</h1>
