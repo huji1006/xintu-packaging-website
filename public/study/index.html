@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#6c63ff">
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <title>翊涵的单词闯关 V3</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <div class="brand"><div class="avatar">🚀</div><div><h1>翊涵的单词闯关</h1><small>认得、会拼，才是真正掌握</small></div></div>
+      <div class="stats">
+        <div class="pill">总积分 <strong id="totalScore">0</strong></div>
+        <div class="pill">今日积分 <strong id="todayScore">0</strong></div>
+        <div class="pill">已掌握 <strong id="masteredCount">0</strong>/<span id="wordCount">0</span></div>
+      </div>
+    </header>
+
+    <main>
+      <section id="home" class="view active">
+        <div class="hero">
+          <div class="hero-main"><h2>今天也来闯几关吧 ✨</h2><p>先拆分记忆，再听、认、拼、玩。答错会进入错题本，连续答对 2 次后移出。</p></div>
+          <div class="hero-side">
+            <div class="progress-title"><span>真正掌握</span><span id="progressText">0%</span></div>
+            <div class="progress"><div id="progressBar"></div></div>
+            <div class="hint compact">掌握值达到 9，且在“拼写答题”中独立正确至少 1 次，才算掌握。</div>
+          </div>
+        </div>
+        <div class="section-title"><h3>学习模式</h3><span>建议先学后练</span></div>
+        <div class="grid">
+          <button class="mode-card" data-mode="chunks"><span>🧱</span><h4>拆分拼词</h4><p>点击打乱的词块，拼出完整英文。</p></button>
+          <button class="mode-card" data-mode="listen"><span>🎧</span><h4>听音选词</h4><p>听正确发音，从 4 个单词中选择。</p></button>
+          <button class="mode-card" data-mode="spell"><span>✍️</span><h4>拼写答题</h4><p>根据中文独立写出完整英文。</p></button>
+          <button class="mode-card" data-mode="wrong"><span>📕</span><h4>错题复习</h4><p>连续答对 2 次，移出错题本。</p></button>
+        </div>
+        <div class="section-title"><h3>游戏模式</h3><span>积分是激励，不代表掌握</span></div>
+        <div class="grid">
+          <button class="mode-card" data-mode="mole"><span>🐹</span><h4>单词打地鼠</h4><p>根据中文快速找到正确英文。</p></button>
+          <button class="mode-card" data-mode="match"><span>🧩</span><h4>单词消消乐</h4><p>配对英文和中文，每组获得积分。</p></button>
+          <button class="mode-card" data-view="manage"><span>📚</span><h4>词库与数据</h4><p>查看词块、掌握度，并导入导出记录。</p></button>
+        </div>
+      </section>
+
+      <section id="manage" class="view">
+        <div class="card">
+          <div class="panel-head"><h2>📚 词库与学习数据</h2><button class="btn secondary" data-view="home">返回首页</button></div>
+          <div class="hint">基础教材词库来自 <b>data/words.json</b>，页面只读，避免误删。导出的 JSON 包含全部积分和学习记录，可用于换设备或从 V2 迁移。</div>
+          <div class="btn-row">
+            <button id="exportBtn" class="btn primary">导出学习数据</button>
+            <button id="importBtn" class="btn secondary">导入学习数据</button>
+            <input id="importFile" type="file" accept=".json,application/json" hidden>
+            <button id="resetBtn" class="btn danger">清空学习记录</button>
+          </div>
+          <div class="section-title"><h3>当前词库</h3><span id="wordSummary"></span></div>
+          <div id="wordTableWrap"></div>
+        </div>
+      </section>
+
+      <section id="practice" class="view">
+        <div class="learn-wrap">
+          <div class="panel-head"><button id="leaveBtn" class="btn secondary">← 返回首页</button><div id="practiceCounter" class="pill"></div></div>
+          <div id="questionCard" class="question-card"></div>
+        </div>
+      </section>
+    </main>
+    <p class="footer-note">学习数据只保存在当前浏览器。换电脑前请先导出，再在新设备导入。</p>
+  </div>
+  <div id="toast" class="toast" role="status"></div>
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
