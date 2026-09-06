@@ -8,6 +8,7 @@ import { downloadJson, normalizeAnswer, shuffle, todayKey } from './utils.js';
 import { renderChunks, renderListening, renderSpelling } from './practice.js';
 import { createMatchRound, renderMole } from './games.js';
 
+async function init() {
 const words = await fetch('./data/words.json').then(response => { if (!response.ok) throw new Error('词库加载失败'); return response.json(); });
 let state = loadState(words);
 let mode = null, currentWord = null, pool = [], poolIndex = 0, count = 0, locked = false, timer = null;
@@ -91,3 +92,10 @@ $('#importFile').addEventListener('change', async event => { try { const file = 
 $('#resetBtn').addEventListener('click', () => { if (!confirm('确定清空积分、掌握度和错题记录吗？')) return; state = resetState(); refreshStats(); renderManage(); toast('学习记录已清空'); });
 window.addEventListener('beforeunload', () => saveState(state));
 refreshStats();
+}
+
+init().catch(error => {
+  console.error(error);
+  const card = document.querySelector('#home .hero-main');
+  if (card) card.insertAdjacentHTML('beforeend', '<p style="color:#c83f4b;font-weight:700">页面加载失败，请刷新或升级浏览器后重试。</p>');
+});

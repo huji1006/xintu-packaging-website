@@ -21,7 +21,12 @@ function sanitizeV3(raw) {
   const state = defaultState();
   state.scores.total = Math.max(0, Number(raw?.scores?.total || 0));
   state.scores.daily = raw?.scores?.daily && typeof raw.scores.daily === 'object' ? raw.scores.daily : {};
-  for (const [id, progress] of Object.entries(raw?.wordProgress || {})) state.wordProgress[id] = sanitizeProgress(progress);
+  const savedProgress = raw?.wordProgress || {};
+  for (const id in savedProgress) {
+    if (Object.prototype.hasOwnProperty.call(savedProgress, id)) {
+      state.wordProgress[id] = sanitizeProgress(savedProgress[id]);
+    }
+  }
   state.meta = { ...state.meta, ...(raw.meta || {}), updatedAt: now() };
   return state;
 }
